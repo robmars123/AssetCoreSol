@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Business.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Business.Data
     {
         public static AssetDataAccess db;
 
-        public BaseContext()
+        public BaseContext(AssetDataAccess _db)
         {
             db = new AssetDataAccess();
         }

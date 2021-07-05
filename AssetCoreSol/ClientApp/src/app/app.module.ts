@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -19,6 +20,7 @@ import { AssetsComponent } from './assets/assets.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       //Add more components here

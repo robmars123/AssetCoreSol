@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
@@ -38,7 +39,7 @@ namespace AssetCoreSol
                     .AllowCredentials());
                 // Apply CORS policy for all users  
             });
-
+           // services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             //DB Connection
@@ -52,7 +53,7 @@ namespace AssetCoreSol
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddCors();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,9 +65,12 @@ namespace AssetCoreSol
             }
             else
             {
+                
                 app.UseHsts();
             }
+            app.UseAuthentication();
             app.UseCors("CORS"); //place before MVC
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

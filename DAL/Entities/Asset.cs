@@ -6,7 +6,9 @@ namespace Business
 
     public partial class Asset
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        //[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         [StringLength(50)]
