@@ -1,4 +1,5 @@
 export class Asset {
+  id: string;
   description: string;
   employeeId: string;
   assetCategoryId: string;

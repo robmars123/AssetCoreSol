@@ -27,7 +27,7 @@ namespace AssetCoreSol.Controllers
               _dal = dal;
         }
 
-        // GET api/values
+        // GET api/assets
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<Asset>>> Index()
         {
@@ -35,9 +35,11 @@ namespace AssetCoreSol.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Asset>> GetAssetById([FromRoute]int id)
+        [Consumes("application/json")]
+        public async Task<ActionResult<Asset>> GetAssetById(string id)
         {
-           return await _dal.Assets.FindAsync(id);
+            var assetId = Convert.ToInt32(id);
+           return await _dal.Assets.FindAsync(assetId);
         }
 
         
@@ -72,13 +74,43 @@ namespace AssetCoreSol.Controllers
                 _log.LogError($"Error message: { e.Message}");
                 throw;
             }
+        }
+
+        [HttpPut("{id}")]
+        [Consumes("application/json")]
+        public async Task<IActionResult> EditAsset([FromBody] Asset editedModel)
+        {
+            try
+            {
+                if (editedModel == null)
+                {
+                    _log.LogError("model parameter passed is null.");
+                }
+                Asset asset = _dal.Assets.Find(editedModel.Id);
+
+                    asset.AssetCategoryId = editedModel.AssetCategoryId;
+                    asset.DateAcquired = DateTime.Today;
+                    asset.ComputerName = editedModel.ComputerName;
+                    asset.DepartmentID = editedModel.DepartmentID;
+                    asset.Description = editedModel.Description;
+                    asset.EmployeeId = editedModel.EmployeeId;
+                    asset.Make = editedModel.Make;
+                    asset.ModelNumber = editedModel.ModelNumber;
+                    asset.StatusId = editedModel.StatusId;
+
+                await _dal.SaveChangesAsync();
+                return CreatedAtAction(nameof(GetAssetById), new { id = asset.Id, controller = "assets" }, editedModel);
+            }
+            catch (Exception e)
+            {
+                _log.LogError($"Error message: { e.Message}");
+                throw;
+            }
             
             
         }
 
-
-
-        // GET api/values/5
+        // GET api/assets/5
         //[HttpGet("{id}")]
         //public ActionResult<string> Get(int id)
         //{
@@ -91,11 +123,12 @@ namespace AssetCoreSol.Controllers
         //{
         //}
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //EDIT!
+        // // PUT api/values/5
+        // [HttpPut("{id}")]
+        // public void Put(int id, [FromBody] string value)
+        // {
+        // }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]

@@ -16,12 +16,12 @@ import { Asset } from '../services/asset'; //import Asset class
 })
 @Injectable()
 export class AssetsComponent implements OnInit {
+  isLoading = new BehaviorSubject(false);
   title: string = "Assets Page";
   public assetList: Asset[] = [];
 
   assetForm: FormGroup;
   listData: any;
-  e: any;
 
   constructor(private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder) {
     this.listData = [];
@@ -60,7 +60,7 @@ export class AssetsComponent implements OnInit {
   //page loads
   ngOnInit() {
     this.GetAssets();
-
+    this.isLoading.next(true);
 
     this.setTitle(this.title);
   }

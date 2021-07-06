@@ -1,0 +1,57 @@
+<title>{{title}}</title>
+<h4>Asset Details</h4>
+<div class="shadow-sm p-3 mb-5 bg-body rounded">
+    <form class="p-3 needs-validation" [formGroup]="assetForm" ngNativeValidate >
+    <div class="form-row">
+      <div class="col-md-3 mb-3">
+        <label for="validationCustom01">Computer Name</label>
+        <input type="text" class="form-control" id="validationCustom01" placeholder="Add Computer Name" value="{{this.assetDetails.computerName}}" required formControlName="computerName" [readonly]="isReadOnly">
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+      <div class="col-md-5 mb-3">
+        <label for="floatingTextarea2">Description</label>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" formControlName="description" value="{{this.assetDetails.description}}" [readonly]="isReadOnly"></textarea>
+        </div>
+      </div>
+      <!--<div class="col-md-4 mb-3">
+        <label for="validationCustomUsername">Username</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupPrepend">@</span>
+          </div>
+          <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username" aria-describedby="inputGroupPrepend" required formControlName="computerName">
+          <div class="invalid-feedback">
+            Please choose a username.
+          </div>
+        </div>
+      </div>-->
+    </div>
+    <div class="form-row">
+      <div class="col-md-3 mb-3">
+        <label for="validationCustom03">Make</label>
+        <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="make" value="{{this.assetDetails.make}}" [readonly]="isReadOnly">
+        <div class="invalid-feedback">
+          Please provide a valid city.
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="validationCustom04">Model Number</label>
+        <input type="text" class="form-control" id="validationCustom04" placeholder="" required formControlName="modelNumber" value="{{this.assetDetails.modelNumber}}" [readonly]="isReadOnly">
+        <div class="invalid-feedback">
+          Please provide a valid state.
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+        <div class="col-md-3 mb-3">
+        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" class="me-1" [(ngModel)]="isChecked" [ngModelOptions]="{standalone: true}" (change)="isEdit()">
+        <label for="validationCustom05"> Check to edit details.</label>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="button" (click)="editItem()">Submit</button>
+    <!-- <button class="btn btn-primary" type="button" (click)="reset()">Reset</button> -->
+    </form>
+</div>
