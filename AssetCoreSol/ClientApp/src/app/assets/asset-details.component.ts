@@ -22,9 +22,14 @@ import { Asset } from '../services/asset'; //import Asset class
     assetDetails = new Asset;
     isReadOnly = true;
     public isChecked = false;
+
+    returnedMessage: string = "";
+    isEditChecked = false;
     assetForm: FormGroup;
     listData: any;
-
+    public deletedSuccessfulMessage: any;
+    successfullyDeletedMessageKey: string = "successfullyDeletedMessage"
+    isDeletedSuccessfully = false;
     constructor(private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder, private router: ActivatedRoute) {
 
       this.listData = [];
@@ -37,9 +42,17 @@ import { Asset } from '../services/asset'; //import Asset class
       })
     }
     ngOnInit(): void {
+      var successfullyAdded =localStorage.getItem(this.successfullyDeletedMessageKey);
+      if(successfullyAdded !== ""){
+        this.isDeletedSuccessfully = true;
+        this.deletedSuccessfulMessage = successfullyAdded;
+        localStorage.removeItem(this.successfullyDeletedMessageKey);
+      }
       this.setTitle(this.title);
       this.GetAssetDetail();
     }
+
+    //html button function
     editItem() {
       this.assetDetails.computerName = (this.assetForm.value.computerName) ? this.assetForm.value.computerName : this.assetDetails.computerName;
       this.assetDetails.description = (this.assetForm.value.description) ? this.assetForm.value.description : this.assetDetails.description;
@@ -47,27 +60,44 @@ import { Asset } from '../services/asset'; //import Asset class
       this.assetDetails.modelNumber = (this.assetForm.value.modelNumber) ? this.assetForm.value.modelNumber : this.assetDetails.modelNumber;
       //add more fields. For now, keep those 4 above.
   
-      this.EditAsset();
+      this.EditAsset(); //call this to subscribe to service that calls AssetController
       
     }
     GetAssetDetail() {
-      let pagePassedValue: any = this.router.snapshot.params;
-      this.assetService.getAssetDetail(pagePassedValue.id).subscribe((data) => {
+      let assetId: any = this.router.snapshot.params;
+      this.assetService.getAssetDetail(assetId.id).subscribe((data) => {
         this.assetDetails = data;
-      })
+      });
     }
 
-    isEdit(){
-      if(this.isChecked)
-      this.isReadOnly = false;
-      else
-      this.isReadOnly = true;
+    //update asset details
+    isEditCheckboxChecked(){
+      if(this.isChecked){
+        this.isEditChecked = true;
+        this.isReadOnly = false;
+      }
+      else{
+        this.isReadOnly = true;
+        this.isEditChecked = false;
+      }
+
     }
 
+    //method to subscribe to Asset Service
     EditAsset() {
       let pagePassedValue: any = this.router.snapshot.params;
       this.assetService.editAsset(pagePassedValue.id, this.assetDetails);
       window.location.reload();
+    }
+
+    //method delete or remove a record
+    deleteItem(url: string) {
+      let assetId: any = this.router.snapshot.params;
+
+      var returnedMessage = this.assetService.deleteAsset(assetId.id).toString();
+        localStorage.removeItem(this.successfullyDeletedMessageKey);
+        localStorage.setItem(this.successfullyDeletedMessageKey, returnedMessage);
+        window.open(url, "_self");     
     }
 
     //page title 

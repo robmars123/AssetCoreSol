@@ -47,11 +47,11 @@
     </div>
     <div class="form-row">
         <div class="col-md-3 mb-3">
-        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" class="me-1" [(ngModel)]="isChecked" [ngModelOptions]="{standalone: true}" (change)="isEdit()">
+        <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" class="me-1" [(ngModel)]="isChecked" [ngModelOptions]="{standalone: true}" (change)="isEditCheckboxChecked()">
         <label for="validationCustom05"> Check to edit details.</label>
         </div>
     </div>
-    <button class="btn btn-primary" type="button" (click)="editItem()">Submit</button>
-    <!-- <button class="btn btn-primary" type="button" (click)="reset()">Reset</button> -->
+    <button class="btn btn-dark" type="button" (click)="editItem()" [disabled]="!isEditChecked">Submit</button>
+    <button class="ms-2 btn btn-dark" type="button" (click)="deleteItem('/assets')">Delete</button>
     </form>
 </div>

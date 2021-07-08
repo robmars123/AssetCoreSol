@@ -12,17 +12,22 @@ import { Asset } from '../services/asset'; //import Asset class
 @Component({
   selector: 'app-assets',
   templateUrl: './assets.component.html',
+  styleUrls: ['./assets.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 @Injectable()
 export class AssetsComponent implements OnInit {
-  isLoading = new BehaviorSubject(false);
   title: string = "Assets Page";
+  isLoading = new BehaviorSubject(false);
+  isAddedSuccessfulMessage = false;
+  isDeletedSuccessfulMessage = false;
   public assetList: Asset[] = [];
-
+  public successfulMessage: any;
   assetForm: FormGroup;
   listData: any;
-
+  totalAssets: number = 0;
+  successfullyAddedMessageKey: string = "successfullyAddedMessage";
+  successfullyDeletedMessageKey: string = "successfullyDeletedMessage"
   constructor(private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder) {
     this.listData = [];
 
@@ -32,7 +37,6 @@ export class AssetsComponent implements OnInit {
       make: ['', Validators.required],
       modelNumber: ['', Validators.required]
     })
-
   }
 
   //add record
@@ -62,7 +66,22 @@ export class AssetsComponent implements OnInit {
     this.GetAssets();
     this.isLoading.next(true);
 
+    var successfullyAdded =localStorage.getItem(this.successfullyAddedMessageKey);
+    var successfullyDeleted =localStorage.getItem(this.successfullyDeletedMessageKey);
+
+    if(successfullyAdded !== null){
+      this.isAddedSuccessfulMessage = true;
+      this.successfulMessage = successfullyAdded;
+      localStorage.removeItem(this.successfullyAddedMessageKey);
+    }
+    else if(successfullyDeleted !== null){
+      this.isDeletedSuccessfulMessage = true;
+      this.successfulMessage = successfullyDeleted;
+      localStorage.removeItem(this.successfullyDeletedMessageKey);
+    }
+
     this.setTitle(this.title);
+
   }
 
   pageRefresh$ = new BehaviorSubject<boolean>(true);
@@ -70,13 +89,16 @@ export class AssetsComponent implements OnInit {
   //get list
   GetAssets() {
     this.assetService.getAssets().subscribe((data) => {
-      this.assetList = data;
-    })
+     this.assetList = data;
+     this.totalAssets = this.assetList.length;
+    });
   }
 
   //finally, call this method to subscribe to Controller.
   AddAsset() {
-    this.assetService.addAsset(this.listData);
+     var returnedMessage = this.assetService.addAsset(this.listData).toString();
+     localStorage.removeItem(this.successfullyAddedMessageKey);
+     localStorage.setItem(this.successfullyAddedMessageKey, returnedMessage);
     window.location.reload();
   }
 

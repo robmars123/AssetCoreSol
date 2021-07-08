@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net;
 using Business;
 using Business.Services;
 using Microsoft.AspNetCore.Cors;
@@ -67,7 +69,7 @@ namespace AssetCoreSol.Controllers
                 };
                 _dal.Assets.Add(_asset);
                 await _dal.SaveChangesAsync();
-                return CreatedAtAction(nameof(GetAssetById), new { id = _asset.Id, controller = "assets" }, newAssetModel);
+                return  CreatedAtAction(nameof(GetAssetById), new { id = _asset.Id, controller = "assets" }, newAssetModel);
             }
             catch (Exception e)
             {
@@ -86,20 +88,20 @@ namespace AssetCoreSol.Controllers
                 {
                     _log.LogError("model parameter passed is null.");
                 }
-                Asset asset = _dal.Assets.Find(editedModel.Id);
+                Asset _asset = _dal.Assets.Find(editedModel.Id);
 
-                    asset.AssetCategoryId = editedModel.AssetCategoryId;
-                    asset.DateAcquired = DateTime.Today;
-                    asset.ComputerName = editedModel.ComputerName;
-                    asset.DepartmentID = editedModel.DepartmentID;
-                    asset.Description = editedModel.Description;
-                    asset.EmployeeId = editedModel.EmployeeId;
-                    asset.Make = editedModel.Make;
-                    asset.ModelNumber = editedModel.ModelNumber;
-                    asset.StatusId = editedModel.StatusId;
+                    _asset.AssetCategoryId = editedModel.AssetCategoryId;
+                    _asset.DateAcquired = DateTime.Today;
+                    _asset.ComputerName = editedModel.ComputerName;
+                    _asset.DepartmentID = editedModel.DepartmentID;
+                    _asset.Description = editedModel.Description;
+                    _asset.EmployeeId = editedModel.EmployeeId;
+                    _asset.Make = editedModel.Make;
+                    _asset.ModelNumber = editedModel.ModelNumber;
+                    _asset.StatusId = editedModel.StatusId;
 
                 await _dal.SaveChangesAsync();
-                return CreatedAtAction(nameof(GetAssetById), new { id = asset.Id, controller = "assets" }, editedModel);
+                return CreatedAtAction(nameof(GetAssetById), new { id = _asset.Id, controller = "assets" }, editedModel);
             }
             catch (Exception e)
             {
@@ -110,30 +112,20 @@ namespace AssetCoreSol.Controllers
             
         }
 
-        // GET api/assets/5
-        //[HttpGet("{id}")]
-        //public ActionResult<string> Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST api/values
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //EDIT!
-        // // PUT api/values/5
-        // [HttpPut("{id}")]
-        // public void Put(int id, [FromBody] string value)
-        // {
-        // }
-
         // DELETE api/values/5
         [HttpDelete("{id}")]
+        [Consumes("application/json")]
         public void Delete(int id)
         {
+            if (id <= 0)
+            _log.LogError("Invalid Id parameter value.");
+
+            Asset asset = _dal.Assets.Find(id);
+            if(asset == null)
+                _log.LogError("model parameter passed is null.");
+
+           _dal.Remove(asset);
+            _dal.SaveChangesAsync();
         }
     }
 }
