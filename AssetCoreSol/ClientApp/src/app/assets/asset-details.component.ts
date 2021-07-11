@@ -4,10 +4,11 @@ import { AssetService } from '../services/asset.service'
 import { ActivatedRoute } from '@angular/router';
 
 
-import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators, NgForm, NgControl } from '@angular/forms'
 
 import { BehaviorSubject } from 'rxjs';
 import { Asset } from '../services/asset'; //import Asset class
+import { Category } from '../models/category'; // import Category class
 import { StatusEnum } from '../models/statusEnum'; //import enum file
 
 @Component({
@@ -22,6 +23,7 @@ import { StatusEnum } from '../models/statusEnum'; //import enum file
     isLoading = new BehaviorSubject(false);
     title: string = "Asset Details";
     assetDetails = new Asset;
+    public categoryList: any;
     isReadOnly = true;
     public isChecked = false;
 
@@ -34,7 +36,8 @@ import { StatusEnum } from '../models/statusEnum'; //import enum file
     isDeletedSuccessfully = false;
 
     public statusEnum: any;
-    selectedItem: string = "";
+    selectedItem: string = ""; //selected item for Status/Condition dropdownlist
+    selectedCategoryItem: string = ""; //selected item for Category
     constructor(private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder, private router: ActivatedRoute) {
 
       this.listData = [];
@@ -44,8 +47,11 @@ import { StatusEnum } from '../models/statusEnum'; //import enum file
         description: ['', Validators.required],
         make: ['', Validators.required],
         modelNumber: ['', Validators.required],
-        statusId: ['', Validators.required]
+        statusId: ['', Validators.required],
+        assetCategoryId: ['', Validators.required]
       })
+
+      
     }
     ngOnInit(): void {
       var successfullyAdded =localStorage.getItem(this.successfullyDeletedMessageKey);
@@ -69,7 +75,9 @@ import { StatusEnum } from '../models/statusEnum'; //import enum file
       this.assetDetails.description = (this.assetForm.value.description) ? this.assetForm.value.description : this.assetDetails.description;
       this.assetDetails.make = (this.assetForm.value.make) ? this.assetForm.value.make : this.assetDetails.make;
       this.assetDetails.modelNumber = (this.assetForm.value.modelNumber) ? this.assetForm.value.modelNumber : this.assetDetails.modelNumber;
-      this.assetDetails.statusId = (this.assetForm.value.statusId) ? enumToString(this.assetForm.value.statusId) : enumToString(this.assetDetails.statusId);
+      this.assetDetails.statusId =  (this.assetForm.value.statusId) ? this.assetForm.value.statusId = enumToString(this.assetForm.value.statusId)
+                                                                            : this.assetDetails.statusId;
+      this.assetDetails.assetCategoryId = (this.assetForm.value.assetCategoryId) ? this.assetForm.value.assetCategoryId : this.assetDetails.assetCategoryId;
       //add more fields. For now, keep those 4 above.
   
       this.EditAsset(); //call this to subscribe to service that calls AssetController
@@ -77,8 +85,22 @@ import { StatusEnum } from '../models/statusEnum'; //import enum file
     }
     GetAssetDetail() {
       let assetId: any = this.router.snapshot.params;
+      let selectedCategoryItemValue: string;
       this.assetService.getAssetDetail(assetId.id).subscribe((data) => {
         this.assetDetails = data;
+
+        this.categoryList = this.assetDetails.categoryList;
+
+        this.categoryList.forEach((cat: { assetCategoryId: string; assetCategoryName: string; }) => {
+            if(cat.assetCategoryId === this.assetDetails.assetCategoryId){
+              selectedCategoryItemValue = cat.assetCategoryName;
+              this.assetForm.controls['assetCategoryId'].setValue(this.assetDetails.assetCategoryId); //setting a value of the Category dropdownlist.
+            }
+        });
+
+        this.selectedCategoryItem = selectedCategoryItemValue;
+
+        //dropdownlist returned value(s)
         this.selectedItem = enumToString(this.assetDetails.statusId); //sets the default value saved on the model asset details.
       });
     }

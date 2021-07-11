@@ -11,6 +11,7 @@
   <ItemGroup>
     <Folder Include="Enums\" />
     <Folder Include="Extensions\" />
+    <Folder Include="DataModels\" />
   </ItemGroup>
 
   <ItemGroup>

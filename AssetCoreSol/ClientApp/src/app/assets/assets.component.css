@@ -7,7 +7,7 @@ th, td { padding: 8px 16px; }
 thead,th     { background:#fff; color: rgb(107, 107, 107)}
 
 
-.flex-contianer {
+.flex-container {
     display: flex;
     justify-content: space-between;
   }

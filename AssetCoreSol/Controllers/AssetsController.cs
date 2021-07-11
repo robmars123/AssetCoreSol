@@ -33,7 +33,13 @@ namespace AssetCoreSol.Controllers
         [HttpGet("[action]")]
         public async Task<ActionResult<IEnumerable<Asset>>> Index()
         {
-             return await _dal.Assets.ToListAsync();
+            var assets = await _dal.Assets.ToListAsync();
+
+            foreach (var asset in assets)
+            {
+                asset.CategoryList = _dal.AssetCategories.ToList();
+            }
+             return assets;
         }
 
         [HttpGet("{id}")]
@@ -41,7 +47,10 @@ namespace AssetCoreSol.Controllers
         public async Task<ActionResult<Asset>> GetAssetById(string id)
         {
             var assetId = Convert.ToInt32(id);
-           return await _dal.Assets.FindAsync(assetId);
+            var asset = await _dal.Assets.FindAsync(assetId);
+            asset.CategoryList = _dal.AssetCategories.ToList();
+
+            return asset;
         }
 
         

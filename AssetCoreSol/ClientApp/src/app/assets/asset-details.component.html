@@ -16,18 +16,19 @@
             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" formControlName="description" value="{{this.assetDetails.description}}" [readonly]="isReadOnly"></textarea>
         </div>
       </div>
-      <!--<div class="col-md-4 mb-3">
-        <label for="validationCustomUsername">Username</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroupPrepend">@</span>
+      <div class="col-md-3 mb-3">
+        <div class="" style="font-size: 11px; margin-top:4px;" >
+          <mat-form-field appearance="fill" class="mt-4 ms-1  border" style="height:40px !important;margin-top: 5px"  >
+            <mat-label>Category</mat-label>
+            <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+            <mat-select formControlName="assetCategoryId" [value]="selectedCategoryItem">
+              <mat-option *ngFor="let cat of categoryList" [value]="cat.assetCategoryId">
+                {{cat.assetCategoryName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
           </div>
-          <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username" aria-describedby="inputGroupPrepend" required formControlName="computerName">
-          <div class="invalid-feedback">
-            Please choose a username.
-          </div>
-        </div>
-      </div>-->
+      </div>
     </div>
     <div class="form-row">
       <div class="col-md-3 mb-3">
@@ -45,7 +46,7 @@
         </div>
       </div>
       <div class="" style="font-size: 11px; margin-top:4px;" >
-      <mat-form-field appearance="fill" class="mt-4 ms-1  border" style="height:40px;margin-top: 5px"  >
+      <mat-form-field appearance="fill" class="mt-4 ms-1  border" style="height:40px !important;margin-top: 5px"  >
         <mat-label>Status</mat-label>
         <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
         <mat-select [value]="selectedItem" formControlName="statusId">

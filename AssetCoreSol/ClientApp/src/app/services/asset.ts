@@ -1,3 +1,5 @@
+import { Category } from "../models/category";
+
  export class Asset {
 
   id: string;
@@ -11,5 +13,8 @@
   computerName: string;
   dateAcquired: string;
 
-  statusValue: string;
+  statusName: string;
+  categoryName: string;
+
+  categoryList: Category[];
 }

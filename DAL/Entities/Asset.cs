@@ -1,6 +1,7 @@
 namespace Business
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -32,5 +33,8 @@ namespace Business
         public string ComputerName { get; set; }
 
         public DateTime? DateAcquired { get; set; }
+
+        [NotMapped]
+        public List<AssetCategory> CategoryList { get; set; }
     }
 }

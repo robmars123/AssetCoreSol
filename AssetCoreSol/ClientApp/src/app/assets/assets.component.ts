@@ -31,7 +31,8 @@ export class AssetsComponent implements OnInit {
   successfullyDeletedMessageKey: string = "successfullyDeletedMessage";
   public statusEnum: any; //dropdownlist for Status
   selectedItem: string = "";
-
+  public categoryList: any;
+  selectedCategoryItem: string = "";
   constructor(private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder) {
     this.listData = [];
 
@@ -40,7 +41,8 @@ export class AssetsComponent implements OnInit {
       description: ['', Validators.required],
       make: ['', Validators.required],
       modelNumber: ['', Validators.required],
-      statusId: ['', Validators.required]
+      statusId: ['', Validators.required],
+      assetCategoryId: ['', Validators.required]
     })
   }
 
@@ -81,22 +83,34 @@ export class AssetsComponent implements OnInit {
 
     this.statusEnum = Object.values(StatusEnum).filter(value => typeof value === 'string'); //load all the values from the enum
     this.setTitle(this.title);
-
   }
 
   //get list
   GetAssets() {
-    this.assetService.getAssets().subscribe((data) => {
-     this.assetList = data;
-     this.totalAssets = this.assetList.length;
+      this.assetService.getAssets().subscribe((data) => {
+      this.assetList = data;
+      this.totalAssets = this.assetList.length;
 
-     //loop and change statusId number value to string.
-     this.assetList.forEach(function (value) {
-     value.statusId = enumToString(value.statusId);
-    }); 
+      let categories: any;
 
+      //loop and change statusId number value to string.
+      this.assetList.forEach(function (value) {
+          value.statusId = enumToString(value.statusId);
+
+          //assign a list once
+          categories = value.categoryList;
+          //loop through all category items and get the name
+          value.categoryList.forEach(function (cat){
+            if(cat.assetCategoryId === value.assetCategoryId){
+              value.assetCategoryId = cat.assetCategoryName; //assigned the name instead of Id for display
+            }
+          });   
+      });
+
+      this.categoryList = categories;
     });
   }
+
 
   //finally, call this method to subscribe to Controller.
   AddAsset() {
@@ -106,22 +120,11 @@ export class AssetsComponent implements OnInit {
     window.location.reload();
   }
 
-
   //page title
   public setTitle(newTitle: string) {
     this.pageTitle.setTitle(newTitle);
   }
-
 }
-
-// enum StatusEnum
-// {
-//   Decommissioned = 0,
-//     Available = 1,
-//     Assigned = 2,
-//     UnderRepair = 3
-
-// }
 
 //enum number to string
 function enumToString(value: any): string {
