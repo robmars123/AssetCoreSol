@@ -1,4 +1,5 @@
-export class Asset {
+ export class Asset {
+
   id: string;
   description: string;
   employeeId: string;
@@ -9,4 +10,6 @@ export class Asset {
   modelNumber: string;
   computerName: string;
   dateAcquired: string;
+
+  statusValue: string;
 }

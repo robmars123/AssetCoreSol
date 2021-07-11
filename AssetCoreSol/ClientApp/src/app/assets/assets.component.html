@@ -5,7 +5,7 @@
   <span>Total Assets: {{totalAssets}}</span>
 </div>
 <div *ngIf="!(isLoading | async)">Loading data...</div>
-<div class="tableList">
+<div class="tableList border shadow-sm">
 <table class="table table-striped table-hover fixed-header" *ngIf="assetList">
   <thead>
     <tr>
@@ -32,38 +32,39 @@
 </table>
 </div>
 
-<hr>
-<h6>Add New Asset</h6>
-<form class="needs-validation border p-3" [formGroup]="assetForm" ngNativeValidate>
+<h4>Add New Asset</h4>
+<form class="needs-validation border p-3 assetAddForm shadow-sm" [formGroup]="assetForm" ngNativeValidate>
   <div class="form-row">
-    <div class="col-md-4 mb-3">
+    <div class="col-md-3 mb-3">
       <label for="validationCustom01">Computer Name</label>
       <input type="text" class="form-control" id="validationCustom01" placeholder="JohnDoe's PC" value="Mark" required formControlName="computerName">
       <div class="valid-feedback">
         Looks good!
       </div>
     </div>
-    <div class="col-md-6 mb-3">
+    <div class="col-md-4 mb-3">
       <label for="floatingTextarea2">Description</label>
       <div class="form-floating">
           <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" formControlName="description"></textarea>
         </div>
     </div>
-    <!--<div class="col-md-4 mb-3">
+    <div class="col-md-2">
       <label for="validationCustomUsername">Username</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroupPrepend">@</span>
-        </div>
-        <input type="text" class="form-control" id="validationCustomUsername" placeholder="Username" aria-describedby="inputGroupPrepend" required formControlName="computerName">
-        <div class="invalid-feedback">
-          Please choose a username.
-        </div>
+        <div class="" style="font-size: 11px;" >
+          <mat-form-field appearance="fill" class="border rounded" style="height: 40px" >
+            <mat-label>Status</mat-label>
+            <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+            <mat-select [value]="selectedItem" formControlName="statusId">
+              <mat-option *ngFor="let enum of statusEnum" [value]="enum">
+                {{enum}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
       </div>
-    </div>-->
+    </div>
   </div>
   <div class="form-row">
-    <div class="col-md-6 mb-3">
+    <div class="col-md-3 mb-3">
       <label for="validationCustom03">Make</label>
       <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="make">
       <div class="invalid-feedback">
@@ -77,6 +78,12 @@
         Please provide a valid state.
       </div>
     </div>
+    <!-- <div class="col-md-3 mb-3">
+      <label for="validationCustom04">Status</label>
+      <input type="text" class="form-control" id="validationCustom04" placeholder="" required formControlName="statusId">
+    </div> -->
+
+    
     <!--<div class="col-md-3 mb-3">
       <label for="validationCustom05">Zip</label>
       <input type="text" class="form-control" id="validationCustom05" placeholder="Zip" required formControlName="computerName">
@@ -91,4 +98,5 @@
   <span class="ms-2 text-success" *ngIf="isAddedSuccessfulMessage">{{successfulMessage}}</span>
   <span class="ms-2 text-success" *ngIf="isDeletedSuccessfulMessage">{{successfulMessage}}</span>
 </form>
+
 

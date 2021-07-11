@@ -44,6 +44,17 @@
           Please provide a valid state.
         </div>
       </div>
+      <div class="" style="font-size: 11px; margin-top:4px;" >
+      <mat-form-field appearance="fill" class="mt-4 ms-1  border" style="height:40px;margin-top: 5px"  >
+        <mat-label>Status</mat-label>
+        <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+        <mat-select [value]="selectedItem" formControlName="statusId">
+          <mat-option *ngFor="let enum of statusEnum" [value]="enum">
+            {{enum}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
     </div>
     <div class="form-row">
         <div class="col-md-3 mb-3">

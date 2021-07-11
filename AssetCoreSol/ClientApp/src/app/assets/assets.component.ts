@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms'
 
 import { BehaviorSubject } from 'rxjs';
 import { Asset } from '../services/asset'; //import Asset class
+import { StatusEnum } from '../models/statusEnum'
 
 @Component({
   selector: 'app-assets',
@@ -27,7 +28,10 @@ export class AssetsComponent implements OnInit {
   listData: any;
   totalAssets: number = 0;
   successfullyAddedMessageKey: string = "successfullyAddedMessage";
-  successfullyDeletedMessageKey: string = "successfullyDeletedMessage"
+  successfullyDeletedMessageKey: string = "successfullyDeletedMessage";
+  public statusEnum: any; //dropdownlist for Status
+  selectedItem: string = "";
+
   constructor(private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder) {
     this.listData = [];
 
@@ -35,7 +39,8 @@ export class AssetsComponent implements OnInit {
       computerName: ['', Validators.required],
       description: ['', Validators.required],
       make: ['', Validators.required],
-      modelNumber: ['', Validators.required]
+      modelNumber: ['', Validators.required],
+      statusId: ['', Validators.required]
     })
   }
 
@@ -43,6 +48,7 @@ export class AssetsComponent implements OnInit {
   addItem() {
 
     if (this.assetForm.valid) {
+      this.assetForm.value.statusId = StatusEnum[this.assetForm.value.statusId]; //get enum number value instead of string.
       this.listData.push(this.assetForm.value); //100% got the data here.
       this.assetForm.reset(); //use this after the form is added to db
 
@@ -53,13 +59,6 @@ export class AssetsComponent implements OnInit {
   reset() {
     this.assetForm.reset();
   }
-
-  //removeItem(element) {
-  //  this.listData.forEach((value, index) => {
-  //    if (value == element)
-  //      this.listData.splice(index, 1);
-  //  });
-
 
   //page loads
   ngOnInit() {
@@ -80,17 +79,22 @@ export class AssetsComponent implements OnInit {
       localStorage.removeItem(this.successfullyDeletedMessageKey);
     }
 
+    this.statusEnum = Object.values(StatusEnum).filter(value => typeof value === 'string'); //load all the values from the enum
     this.setTitle(this.title);
 
   }
-
-  pageRefresh$ = new BehaviorSubject<boolean>(true);
 
   //get list
   GetAssets() {
     this.assetService.getAssets().subscribe((data) => {
      this.assetList = data;
      this.totalAssets = this.assetList.length;
+
+     //loop and change statusId number value to string.
+     this.assetList.forEach(function (value) {
+     value.statusId = enumToString(value.statusId);
+    }); 
+
     });
   }
 
@@ -102,9 +106,26 @@ export class AssetsComponent implements OnInit {
     window.location.reload();
   }
 
+
   //page title
   public setTitle(newTitle: string) {
     this.pageTitle.setTitle(newTitle);
   }
+
 }
+
+// enum StatusEnum
+// {
+//   Decommissioned = 0,
+//     Available = 1,
+//     Assigned = 2,
+//     UnderRepair = 3
+
+// }
+
+//enum number to string
+function enumToString(value: any): string {
+  return StatusEnum[value];
+}
+
 
