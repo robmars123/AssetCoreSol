@@ -49,7 +49,8 @@ import { AssetModel } from '../services/assetModel';
         make: ['', Validators.required],
         modelNumber: ['', Validators.required],
         statusId: ['', Validators.required],
-        assetCategoryId: ['', Validators.required]
+        assetCategoryId: ['', Validators.required],
+        departmentID: ['', Validators.required]
       });
 
       
@@ -78,6 +79,7 @@ import { AssetModel } from '../services/assetModel';
       this.assetDetails.asset.modelNumber = (this.assetForm.value.modelNumber) ? this.assetForm.value.modelNumber : this.assetDetails.asset.modelNumber;
       this.assetDetails.asset.statusId =  (this.assetForm.value.statusId) ? this.assetForm.value.statusId : this.assetDetails.asset.statusId;
       this.assetDetails.asset.assetCategoryId = (this.assetForm.value.assetCategoryId) ? this.assetForm.value.assetCategoryId : this.assetDetails.asset.assetCategoryId;
+      this.assetDetails.asset.departmentID = (this.assetForm.value.departmentID) ? this.assetForm.value.departmentID : this.assetDetails.asset.departmentID;
       //add more fields. For now, keep those 4 above.
   
       this.EditAsset(); //call this to subscribe to service that calls AssetController
@@ -90,8 +92,10 @@ import { AssetModel } from '../services/assetModel';
         this.categoryList = this.assetDetails.categoryList;
         this.statusList = this.assetDetails.statusList;
         this.departmentList = this.assetDetails.departmentList;
+
+        //Default dropdown values
         //loop for Category dropdownlist
-        this.categoryList.forEach((cat: { assetCategoryId: string; assetCategoryName: string; }) => {
+        this.categoryList.forEach((cat: any) => {
             if(cat.assetCategoryId === this.assetDetails.asset.assetCategoryId){
               this.assetForm.controls['assetCategoryId'].setValue(this.assetDetails.asset.assetCategoryId); //setting a value of the Category dropdownlist.
             }
@@ -100,6 +104,12 @@ import { AssetModel } from '../services/assetModel';
         this.statusList.forEach((status: any) => {
           if(status.statusId === this.assetDetails.asset.statusId){
             this.assetForm.controls['statusId'].setValue(this.assetDetails.asset.statusId); //setting a value of the Category dropdownlist.
+          }
+        });
+        //loop for Department dropdownlist
+        this.departmentList.forEach((dep: any) => {
+          if(dep.id === this.assetDetails.asset.departmentID){
+            this.assetForm.controls['departmentID'].setValue(this.assetDetails.asset.departmentID); //setting a value of the Category dropdownlist.
           }
         });
       });
