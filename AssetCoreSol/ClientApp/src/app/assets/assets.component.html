@@ -6,27 +6,31 @@
 </div>
 <div *ngIf="!(isLoading | async)">Loading data...</div>
 <div class="tableList border shadow-sm">
-<table class="table table-hover fixed-header" *ngIf="assetList">
+<table class="table table-hover fixed-header" *ngIf="getAssetsResponse.assetList">
   <thead>
     <tr>
+      <th>Asset Id</th>
       <th>Computer Name</th>
-      <th>Description</th>
+      <th>Department</th>
+      <th>Comments</th>
       <th>Category</th>
       <th>Status</th>
-      <th>Currently Assigned to</th>
+      <th>Assigned Employee</th>
       <th>Action</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let asset of assetList">
+    <tr *ngFor="let asset of getAssetsResponse.assetList">
+      <td>{{ asset.id }}</td>
       <td>{{ asset.computerName }}</td>
+      <td>{{ asset.departmentName }}</td>
       <td>{{ asset.description }}</td>
-      <td>{{ asset.assetCategoryId }}</td>
-      <td>{{ asset.statusId }}</td>
+      <td>{{ asset.categoryName }}</td>
+      <td>{{ asset.statusName }}</td>
       <td>{{ asset.employeeId }}</td>
       <td>
           <a class="text-secondary" [routerLink]="['/assets', asset.id]" [routerLinkActive]='["link-active"]'>
-            Details
+            View Full Details
           </a>
       </td>
     </tr>
@@ -55,12 +59,21 @@
     <div class="col-md-2 me-2">
       <label for="validationCustomUsername">Condition</label>
         <div class="" style="font-size: 11px;" >
-          <mat-form-field appearance="fill" class="border rounded" style="height: 40px" >
+          <!-- <mat-form-field appearance="fill" class="border rounded" style="height: 40px" >
             <mat-label>Status</mat-label>
-            <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+            [value]=selectedItem is important to set default or selected value from dropdownlist 
             <mat-select [value]="selectedItem" formControlName="statusId">
               <mat-option *ngFor="let enum of statusEnum" [value]="enum">
                 {{enum}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+          <mat-form-field appearance="fill" class="border rounded" style="height:40px !important;"  >
+            <mat-label>Status</mat-label>
+            <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+            <mat-select formControlName="statusId" [value]="selectedItem">
+              <mat-option *ngFor="let status of statusList" [value]="status.statusId">
+                {{status.description}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -96,6 +109,20 @@
         Please provide a valid state.
       </div>
     </div>
+    <div class="col-md-3 mb-3">
+      <label for="validationCustom04">Department</label>
+      <div class="" style="font-size: 11px;" >
+        <mat-form-field appearance="fill" class="border rounded" style="height:40px !important;"  >
+          <mat-label>Department</mat-label>
+          <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+          <mat-select formControlName="departmentId">
+            <mat-option *ngFor="let dep of departmentList" [value]="dep.id">
+              {{dep.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
     <!-- <div class="col-md-3 mb-3">
       <label for="validationCustom04">Status</label>
       <input type="text" class="form-control" id="validationCustom04" placeholder="" required formControlName="statusId">
@@ -111,8 +138,8 @@
     </div>-->
   </div>
 
-  <button class="btn btn-dark" type="button" (click)="addItem()" [disabled]="assetForm.invalid">Submit</button>
-  <button class="btn btn-dark ms-2" type="button" (click)="reset()">Reset</button>
+  <button class="btn btn-dark shadow-sm" type="button" (click)="addItem()" [disabled]="assetForm.invalid">Submit</button>
+  <button class="shadow-sm btn btn-dark ms-2" type="button" (click)="reset()">Reset</button>
   <span class="ms-2 text-success" *ngIf="isAddedSuccessfulMessage">{{successfulMessage}}</span>
   <span class="ms-2 text-success" *ngIf="isDeletedSuccessfulMessage">{{successfulMessage}}</span>
 </form>

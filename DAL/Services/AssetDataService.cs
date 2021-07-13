@@ -1,4 +1,6 @@
-﻿using Business.Data;
+﻿using DAL;
+using DAL.Data;
+using DAL.Entities;
 using DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;

@@ -31,3 +31,8 @@ thead,th     { background:#fff; color: rgb(107, 107, 107)}
   padding: 0em 0em 0 0em !important;
   height: 30px !important;
 }
+
+* {
+    border-radius: 0 !important;
+    border-width: 1px;
+  }

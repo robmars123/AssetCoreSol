@@ -4,14 +4,11 @@ namespace DAL.Entities
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-
-    public partial class AssetCategory
+    public partial class Department
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int AssetCategoryId { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public string AssetCategoryName { get; set; }
+        public int Id { get; set; }
+        [StringLength(150)]
+        public string Name { get; set; }
     }
 }

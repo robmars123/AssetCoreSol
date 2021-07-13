@@ -1,8 +1,9 @@
-namespace Business
+namespace DAL
 {
     using System;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using DAL.Entities;
     using Microsoft.EntityFrameworkCore;
 
     public partial class AssetDataAccess : DbContext
@@ -21,6 +22,7 @@ namespace Business
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Maintenance> Maintenances { get; set; }
         public virtual DbSet<Status> Status { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

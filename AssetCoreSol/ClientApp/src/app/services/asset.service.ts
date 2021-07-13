@@ -2,6 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Asset } from './asset';
+import { AssetModel } from './assetModel';
 
 
 @Injectable({
@@ -14,11 +15,11 @@ export class AssetService {
 
   constructor(private http: HttpClient) { }
 
-  getAssets(): Observable<Asset[]> {
-    return this.http.get<Asset[]>(this.baseUrl + "index");
+  getAssets(): Observable<AssetModel> {
+    return this.http.get<AssetModel>(this.baseUrl + "index");
   }
-  public getAssetDetail(id: number): Observable<Asset> {
-    return this.http.get<Asset>(this.baseUrl + id);
+  public getAssetDetail(id: number): Observable<AssetModel> {
+    return this.http.get<AssetModel>(this.baseUrl + id);
   }
 
   //Add more methods here to call the API methods from controller

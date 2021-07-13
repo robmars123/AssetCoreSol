@@ -1,4 +1,4 @@
-namespace Business
+namespace DAL.Entities
 {
     using System;
     using System.Collections.Generic;

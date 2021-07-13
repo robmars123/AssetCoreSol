@@ -5,7 +5,7 @@
     <div class="form-row">
       <div class="col-md-3 mb-3">
         <label for="validationCustom01">Computer Name</label>
-        <input type="text" class="form-control" id="validationCustom01" placeholder="Add Computer Name" value="{{this.assetDetails.computerName}}" required formControlName="computerName" [readonly]="isReadOnly">
+        <input type="text" class="form-control" id="validationCustom01" placeholder="Add Computer Name" value="{{assetDetails.asset.computerName}}" required formControlName="computerName" [readonly]="isReadOnly">
         <div class="valid-feedback">
           Looks good!
         </div>
@@ -13,12 +13,13 @@
       <div class="col-md-5 mb-3">
         <label for="floatingTextarea2">Description</label>
         <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" formControlName="description" value="{{this.assetDetails.description}}" [readonly]="isReadOnly"></textarea>
+            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" formControlName="description" value="{{this.assetDetails.asset.description}}" [readonly]="isReadOnly"></textarea>
         </div>
       </div>
-      <div class="col-md-3 mb-3">
-        <div class="" style="font-size: 11px; margin-top:4px;" >
-          <mat-form-field appearance="fill" class="mt-4 ms-1  border" style="height:40px !important;margin-top: 5px"  >
+      <div class="col-md-3">
+        <label for="floatingTextarea2">Category</label>
+        <div class="" style="font-size: 11px;" >
+          <mat-form-field appearance="fill" class="border" style="height:40px !important;"  >
             <mat-label>Category</mat-label>
             <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
             <mat-select formControlName="assetCategoryId" [value]="selectedCategoryItem">
@@ -33,30 +34,47 @@
     <div class="form-row">
       <div class="col-md-3 mb-3">
         <label for="validationCustom03">Make</label>
-        <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="make" value="{{this.assetDetails.make}}" [readonly]="isReadOnly">
+        <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="make" value="{{this.assetDetails.asset.make}}" [readonly]="isReadOnly">
         <div class="invalid-feedback">
           Please provide a valid city.
         </div>
       </div>
       <div class="col-md-3 mb-3">
         <label for="validationCustom04">Model Number</label>
-        <input type="text" class="form-control" id="validationCustom04" placeholder="" required formControlName="modelNumber" value="{{this.assetDetails.modelNumber}}" [readonly]="isReadOnly">
+        <input type="text" class="form-control" id="validationCustom04" placeholder="" required formControlName="modelNumber" value="{{this.assetDetails.asset.modelNumber}}" [readonly]="isReadOnly">
         <div class="invalid-feedback">
           Please provide a valid state.
         </div>
       </div>
-      <div class="" style="font-size: 11px; margin-top:4px;" >
-      <mat-form-field appearance="fill" class="mt-4 ms-1  border" style="height:40px !important;margin-top: 5px"  >
-        <mat-label>Status</mat-label>
-        <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
-        <mat-select [value]="selectedItem" formControlName="statusId">
-          <mat-option *ngFor="let enum of statusEnum" [value]="enum">
-            {{enum}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <div class="col-md-2 me-2">
+        <label for="validationCustomUsername">Condition</label>
+          <div class="" style="font-size: 11px;" >
+            <mat-form-field appearance="fill" class="border rounded" style="height:40px !important;"  >
+              <mat-label>Status</mat-label>
+              <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+              <mat-select formControlName="statusId" [value]="selectedItem">
+                <mat-option *ngFor="let status of statusList" [value]="status.statusId">
+                  {{status.description}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+        </div>
       </div>
-    </div>
+      <div class="col-md-3 ms-1">
+        <label for="validationCustom04">Department</label>
+        <div class="" style="font-size: 11px; margin-left: 10px;" >
+          <mat-form-field appearance="fill" class="ms-1 border rounded" style="height:40px !important;"  >
+            <mat-label>Department</mat-label>
+            <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+            <mat-select formControlName="departmentId">
+              <mat-option *ngFor="let dep of departmentList" [value]="dep.id">
+                {{dep.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      </div>
     <div class="form-row">
         <div class="col-md-3 mb-3">
         <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" class="me-1" [(ngModel)]="isChecked" [ngModelOptions]="{standalone: true}" (change)="isEditCheckboxChecked()">

@@ -1,4 +1,5 @@
 ﻿using Business;
+using DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

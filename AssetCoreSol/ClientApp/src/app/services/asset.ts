@@ -13,8 +13,9 @@ import { Category } from "../models/category";
   computerName: string;
   dateAcquired: string;
 
+  //mapped names
   statusName: string;
   categoryName: string;
-
+  departmentName: string;
   categoryList: Category[];
 }

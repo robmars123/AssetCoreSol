@@ -8,7 +8,9 @@ import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms'
 
 import { BehaviorSubject } from 'rxjs';
 import { Asset } from '../services/asset'; //import Asset class
-import { StatusEnum } from '../models/statusEnum'
+import { AssetModel } from '../services/assetModel';
+import { Category } from '../models/category';
+import { Status } from '../models/status';
 
 @Component({
   selector: 'app-assets',
@@ -22,7 +24,7 @@ export class AssetsComponent implements OnInit {
   isLoading = new BehaviorSubject(false);
   isAddedSuccessfulMessage = false;
   isDeletedSuccessfulMessage = false;
-  public assetList: Asset[] = [];
+  public getAssetsResponse: AssetModel = new AssetModel;
   public successfulMessage: any;
   assetForm: FormGroup;
   listData: any;
@@ -32,6 +34,8 @@ export class AssetsComponent implements OnInit {
   public statusEnum: any; //dropdownlist for Status
   selectedItem: string = "";
   public categoryList: any;
+  public departmentList: any;
+  public statusList: any;
   selectedCategoryItem: string = "";
   constructor(private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder) {
     this.listData = [];
@@ -42,7 +46,8 @@ export class AssetsComponent implements OnInit {
       make: ['', Validators.required],
       modelNumber: ['', Validators.required],
       statusId: ['', Validators.required],
-      assetCategoryId: ['', Validators.required]
+      assetCategoryId: ['', Validators.required],
+      departmentId: ['', Validators.required]
     })
   }
 
@@ -50,7 +55,7 @@ export class AssetsComponent implements OnInit {
   addItem() {
 
     if (this.assetForm.valid) {
-      this.assetForm.value.statusId = StatusEnum[this.assetForm.value.statusId]; //get enum number value instead of string.
+      //this.assetForm.value.statusId = StatusEnum[this.assetForm.value.statusId]; //get enum number value instead of string.
       this.listData.push(this.assetForm.value); //100% got the data here.
       this.assetForm.reset(); //use this after the form is added to db
 
@@ -80,38 +85,61 @@ export class AssetsComponent implements OnInit {
       this.successfulMessage = successfullyDeleted;
       localStorage.removeItem(this.successfullyDeletedMessageKey);
     }
-
-    this.statusEnum = Object.values(StatusEnum).filter(value => typeof value === 'string'); //load all the values from the enum
+    var test = this.getAssetsResponse.assetList;
     this.setTitle(this.title);
   }
 
   //get list
   GetAssets() {
       this.assetService.getAssets().subscribe((data) => {
-      this.assetList = data;
-      this.totalAssets = this.assetList.length;
+      this.getAssetsResponse = data;
+      this.totalAssets = this.getAssetsResponse.assetList.length;
 
-      let categories: any;
+      let categories = this.getAssetsResponse.categoryList;
+      let statusList = this.getAssetsResponse.statusList;
+      let departmentList = this.getAssetsResponse.departmentList;
 
-      //loop and change statusId number value to string.
-      this.assetList.forEach(function (value) {
-          value.statusId = enumToString(value.statusId);
-
-          //assign a list once
-          categories = value.categoryList;
-          //loop through all category items and get the name
-          value.categoryList.forEach(function (cat){
-            if(cat.assetCategoryId === value.assetCategoryId){
-              value.assetCategoryId = cat.assetCategoryName; //assigned the name instead of Id for display
-            }
+      var self = this;
+      this.getAssetsResponse.assetList.forEach(function (asset) {
+              asset.categoryName = self.getCategoryName(asset.assetCategoryId, categories);
+              asset.statusName = self.getStatusName(asset.statusId, statusList);
+              asset.departmentName = self.getDepartmentName(asset.departmentID,departmentList);
           });   
-      });
 
       this.categoryList = categories;
+      this.departmentList = departmentList;
+      this.statusList = statusList;
     });
   }
+ //get categories - this will be called once only after webapi returns the data. Looping through asset list happens only in the Angular client.
+ getCategoryName(id: string, categories: any): string{
+   let categoryName: string = "";
+    categories.forEach(function (cat: { assetCategoryId: any; assetCategoryName: any; }) {
+     if (cat.assetCategoryId === id)
+     categoryName = cat.assetCategoryName;
+   });
+   return categoryName;
+  }
 
+  getStatusName(id: string, statusList: any): string{
+    let statusDescription: string = "";
 
+    statusList.forEach(function (status: { statusId: string; description: string; }) {
+      if(status.statusId === id)
+      statusDescription = status.description;
+    });
+    return statusDescription;
+  }
+
+  getDepartmentName(id: string, departmentList: any){
+    let departmentName: string = "";
+
+    departmentList.forEach(function(dep: { id: string, name: string}) {
+      if(dep.id === id)
+          departmentName = dep.name;
+    });
+    return departmentName;
+  }
   //finally, call this method to subscribe to Controller.
   AddAsset() {
      var returnedMessage = this.assetService.addAsset(this.listData).toString();
@@ -124,11 +152,6 @@ export class AssetsComponent implements OnInit {
   public setTitle(newTitle: string) {
     this.pageTitle.setTitle(newTitle);
   }
-}
-
-//enum number to string
-function enumToString(value: any): string {
-  return StatusEnum[value];
 }
 
 

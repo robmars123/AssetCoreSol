@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using DAL.Entities;
+using DAL.Models;
+using DAL;
 
 namespace AssetCoreSol.Controllers
 {
@@ -31,26 +34,49 @@ namespace AssetCoreSol.Controllers
 
         // GET api/assets
         [HttpGet("[action]")]
-        public async Task<ActionResult<IEnumerable<Asset>>> Index()
+        public async Task<ActionResult<AssetModel>> Index()
         {
             var assets = await _dal.Assets.ToListAsync();
-
-            foreach (var asset in assets)
-            {
-                asset.CategoryList = _dal.AssetCategories.ToList();
-            }
-             return assets;
+            AssetModel assetPage = new AssetModel {
+                AssetList = assets,
+                CategoryList = GetCategoryList(),
+                StatusList = GetStatusList(),
+                DepartmentList = GetDepartmentList()
+            };
+            return assetPage;
         }
 
+        //Get Category list once every controller call
+        private IEnumerable<AssetCategory> GetCategoryList()
+        {
+           return _dal.AssetCategories.ToList();
+        }
+
+        //Get Status list once every controller call
+        private IEnumerable<Status> GetStatusList()
+        {
+            return _dal.Status.ToList();
+        }
+        //Get department list once every controller call
+        private IEnumerable<Department> GetDepartmentList()
+        {
+            return _dal.Departments.ToList();
+        }
+
+        //Get single record
         [HttpGet("{id}")]
         [Consumes("application/json")]
-        public async Task<ActionResult<Asset>> GetAssetById(string id)
+        public async Task<ActionResult<AssetModel>> GetAssetById(string id)
         {
             var assetId = Convert.ToInt32(id);
             var asset = await _dal.Assets.FindAsync(assetId);
-            asset.CategoryList = _dal.AssetCategories.ToList();
-
-            return asset;
+            AssetModel assetPage = new AssetModel() {
+                Asset = asset,
+                CategoryList = GetCategoryList(),
+                StatusList = GetStatusList(),
+                DepartmentList = GetDepartmentList()
+            };
+            return assetPage;
         }
 
         

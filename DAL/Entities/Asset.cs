@@ -1,4 +1,4 @@
-namespace Business
+namespace DAL.Entities
 {
     using System;
     using System.Collections.Generic;
@@ -34,7 +34,7 @@ namespace Business
 
         public DateTime? DateAcquired { get; set; }
 
-        [NotMapped]
-        public List<AssetCategory> CategoryList { get; set; }
+        //[NotMapped]
+        //public List<AssetCategory> CategoryList { get; set; }
     }
 }
