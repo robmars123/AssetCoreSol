@@ -41,7 +41,8 @@ namespace AssetCoreSol.Controllers
                 AssetList = assets,
                 CategoryList = GetCategoryList(),
                 StatusList = GetStatusList(),
-                DepartmentList = GetDepartmentList()
+                DepartmentList = GetDepartmentList(),
+                EmployeeList = GetEmployeeList()
             };
             return assetPage;
         }
@@ -63,6 +64,12 @@ namespace AssetCoreSol.Controllers
             return _dal.Departments.ToList();
         }
 
+        //Get employee list once every controller call
+        private IEnumerable<Employee> GetEmployeeList()
+        {
+            return _dal.Employees.ToList();
+        }
+
         //Get single record
         [HttpGet("{id}")]
         [Consumes("application/json")]
@@ -74,7 +81,8 @@ namespace AssetCoreSol.Controllers
                 Asset = asset,
                 CategoryList = GetCategoryList(),
                 StatusList = GetStatusList(),
-                DepartmentList = GetDepartmentList()
+                DepartmentList = GetDepartmentList(),
+                EmployeeList = GetEmployeeList()
             };
             return assetPage;
         }

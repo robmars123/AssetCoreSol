@@ -7,10 +7,8 @@ import { AssetService } from '../services/asset.service'
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms'
 
 import { BehaviorSubject } from 'rxjs';
-import { Asset } from '../services/asset'; //import Asset class
-import { AssetModel } from '../services/assetModel';
-import { Category } from '../models/category';
-import { Status } from '../models/status';
+import { AssetModel } from '../services/assetModel'; // Acts like a view model
+
 
 @Component({
   selector: 'app-assets',
@@ -36,6 +34,7 @@ export class AssetsComponent implements OnInit {
   public categoryList: any;
   public departmentList: any;
   public statusList: any;
+  public employeeList: any;
   selectedCategoryItem: string = "";
   constructor(private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder) {
     this.listData = [];
@@ -47,7 +46,8 @@ export class AssetsComponent implements OnInit {
       modelNumber: ['', Validators.required],
       statusId: ['', Validators.required],
       assetCategoryId: ['', Validators.required],
-      departmentId: ['', Validators.required]
+      departmentId: ['', Validators.required],
+      employeeId: ['', Validators.required]
     })
   }
 
@@ -98,17 +98,20 @@ export class AssetsComponent implements OnInit {
       let categories = this.getAssetsResponse.categoryList;
       let statusList = this.getAssetsResponse.statusList;
       let departmentList = this.getAssetsResponse.departmentList;
+      let employeeList = this.getAssetsResponse.employeeList;
 
       var self = this;
       this.getAssetsResponse.assetList.forEach(function (asset) {
               asset.categoryName = self.getCategoryName(asset.assetCategoryId, categories);
               asset.statusName = self.getStatusName(asset.statusId, statusList);
               asset.departmentName = self.getDepartmentName(asset.departmentID,departmentList);
+              asset.employeeName = self.getEmployeeName(asset.employeeId, employeeList);
           });   
 
       this.categoryList = categories;
       this.departmentList = departmentList;
       this.statusList = statusList;
+      this.employeeList = employeeList;
     });
   }
  //get categories - this will be called once only after webapi returns the data. Looping through asset list happens only in the Angular client.
@@ -120,7 +123,7 @@ export class AssetsComponent implements OnInit {
    });
    return categoryName;
   }
-
+  //get status for each asset
   getStatusName(id: string, statusList: any): string{
     let statusDescription: string = "";
 
@@ -130,7 +133,7 @@ export class AssetsComponent implements OnInit {
     });
     return statusDescription;
   }
-
+  //get department where the asset is assigned
   getDepartmentName(id: string, departmentList: any){
     let departmentName: string = "";
 
@@ -140,6 +143,17 @@ export class AssetsComponent implements OnInit {
     });
     return departmentName;
   }
+
+  getEmployeeName(id: string, employeeList: any){
+    let employeeName: string = "";
+    
+    employeeList.forEach(function(employee: {id: string, firstName: string, lastName: string}){
+      if(employee.id === id)
+        employeeName = employee.firstName + " " + employee.lastName;
+    });
+    return employeeName;
+  }
+
   //finally, call this method to subscribe to Controller.
   AddAsset() {
      var returnedMessage = this.assetService.addAsset(this.listData).toString();

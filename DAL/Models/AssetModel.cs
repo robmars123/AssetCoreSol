@@ -12,5 +12,6 @@ namespace DAL.Models
         public IEnumerable<Asset> AssetList { get; set; }
         public IEnumerable<Status> StatusList { get; set; }
         public IEnumerable<Department> DepartmentList { get; set; }
+        public IEnumerable<Employee> EmployeeList { get; set; }
     }
 }

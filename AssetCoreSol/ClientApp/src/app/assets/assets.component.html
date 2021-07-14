@@ -1,147 +1,242 @@
 
 <title>{{title}}</title>
-<div class="flex-container mb-1">
-  <span class="fs-5">Dashboard - Assets List</span>
-  <span>Total Assets: {{totalAssets}}</span>
-</div>
-<div *ngIf="!(isLoading | async)">Loading data...</div>
-<div class="tableList border shadow-sm">
-<table class="table table-hover fixed-header" *ngIf="getAssetsResponse.assetList">
-  <thead>
-    <tr>
-      <th>Asset Id</th>
-      <th>Computer Name</th>
-      <th>Department</th>
-      <th>Comments</th>
-      <th>Category</th>
-      <th>Status</th>
-      <th>Assigned Employee</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let asset of getAssetsResponse.assetList">
-      <td>{{ asset.id }}</td>
-      <td>{{ asset.computerName }}</td>
-      <td>{{ asset.departmentName }}</td>
-      <td>{{ asset.description }}</td>
-      <td>{{ asset.categoryName }}</td>
-      <td>{{ asset.statusName }}</td>
-      <td>{{ asset.employeeId }}</td>
-      <td>
-          <a class="text-secondary" [routerLink]="['/assets', asset.id]" [routerLinkActive]='["link-active"]'>
-            View Full Details
-          </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="shadow-sm">
+    <div class="flex-container card-header bg-secondary text-light">
+      <span class="fs-5 ">Dashboard - Assets List</span>
+      <span>Total Assets: {{totalAssets}}</span>
+    </div>
+    <div *ngIf="!(isLoading | async)">Loading data...</div>
+    <div class="tableList border">
+    <table class="table table-hover fixed-header" *ngIf="getAssetsResponse.assetList">
+      <thead>
+        <tr>
+          <th>Asset Id</th>
+          <th>Computer Name</th>
+          <th>Department</th>
+          <th>Comments</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Assigned Employee</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let asset of getAssetsResponse.assetList">
+          <td>{{ asset.id }}</td>
+          <td>{{ asset.computerName }}</td>
+          <td>{{ asset.departmentName }}</td>
+          <td>{{ asset.description }}</td>
+          <td>{{ asset.categoryName }}</td>
+          <td>{{ asset.statusName }}</td>
+          <td>{{ asset.employeeName }}</td>
+          <td>
+              <a class="text-secondary" [routerLink]="['/assets', asset.id]" [routerLinkActive]='["link-active"]'>
+                View Full Details
+              </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="card-footer text-muted bg-secondary">
+    </div>
 </div>
 
-<div class="mb-1 mt-3">
-  <i class="fas fa-laptop-medical"></i> <span class="fs-5">Add Asset</span>
-</div>
-<form class="needs-validation border p-3 assetAddForm shadow-sm" [formGroup]="assetForm" ngNativeValidate>
-  <div class="form-row">
-    <div class="col-md-3 mb-3">
-      <label for="validationCustom01">Computer Name</label>
-      <input type="text" class="form-control" id="validationCustom01" placeholder="JohnDoe's PC" value="Mark" required formControlName="computerName">
-      <div class="valid-feedback">
-        Looks good!
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <label for="floatingTextarea2">Description</label>
-      <div class="form-floating">
-          <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" formControlName="description"></textarea>
+<div class="container mt-4">
+  <div class="main-body">
+    <div class="row">
+      
+        <div class="col-lg-4">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <span>Tasks</span>
+              <hr class="my-4">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                  <a>View Report</a>
+                  <span class="text-secondary">https://bootdey.com</span>
+                </li>
+
+              </ul>
+            </div>
+            <div class="card-body">
+              <span>Setup</span>
+              <hr class="my-4">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                  <a>View Report</a>
+                  <span class="text-secondary">https://bootdey.com</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                  <a>Add Asset</a>
+                  <span class="text-secondary">https://bootdey.com</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                  <a>Add Employee</a>
+                  <span class="text-secondary">https://bootdey.com</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                  <a>Add Department</a>
+                  <span class="text-secondary">https://bootdey.com</span>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-    </div>
-    <div class="col-md-2 me-2">
-      <label for="validationCustomUsername">Condition</label>
-        <div class="" style="font-size: 11px;" >
-          <!-- <mat-form-field appearance="fill" class="border rounded" style="height: 40px" >
-            <mat-label>Status</mat-label>
-            [value]=selectedItem is important to set default or selected value from dropdownlist 
-            <mat-select [value]="selectedItem" formControlName="statusId">
-              <mat-option *ngFor="let enum of statusEnum" [value]="enum">
-                {{enum}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field> -->
-          <mat-form-field appearance="fill" class="border rounded" style="height:40px !important;"  >
-            <mat-label>Status</mat-label>
-            <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
-            <mat-select formControlName="statusId" [value]="selectedItem">
-              <mat-option *ngFor="let status of statusList" [value]="status.statusId">
-                {{status.description}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
+        <div class="col-lg-8">
+          <div class="card-header bg-secondary text-light shadow-sm">
+            <span>Add New Asset</span>
+          </div>
+            <form class="card needs-validation border p-3 assetAddForm shadow-sm" [formGroup]="assetForm" ngNativeValidate>
+              <div class="card-body">
+                <div class="row mb-3">
+                  <div class="col-sm-3">
+                    <h5 class="mb-0">Computer Name</h5>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <input type="text" class="form-control" id="validationCustom01" placeholder="JohnDoe's PC" value="Mark" required formControlName="computerName">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-3">
+                    <h5 class="mb-0">Make</h5>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="make">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-3">
+                    <h5 class="mb-0">Model</h5>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="modelNumber">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-3">
+                    <h5 class="mb-0">Department</h5>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <mat-form-field appearance="fill" class="" >
+                      <mat-label>Select</mat-label>
+                      <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+                      <mat-select formControlName="departmentId">
+                        <mat-option *ngFor="let dep of departmentList" [value]="dep.id">
+                          {{dep.name}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-3">
+                    <h5 class="mb-0">Employee</h5>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <!-- <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="employeeId"> -->
+                    <mat-form-field appearance="fill" class="" style="height:40px !important;"  >
+                      <mat-label>Select</mat-label>
+                      <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+                      <mat-select formControlName="employeeId">
+                        <mat-option *ngFor="let emp of employeeList" [value]="emp.id">
+                          {{emp.firstName +  ' ' + emp.lastName }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-3">
+                    <h5 class="mb-0">Status</h5>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <mat-form-field appearance="fill" class="" style="height:40px !important;"  >
+                      <mat-label>Select</mat-label>
+                      <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+                      <mat-select formControlName="statusId" [value]="selectedItem">
+                        <mat-option *ngFor="let status of statusList" [value]="status.statusId">
+                          {{status.description}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-3">
+                    <h5 class="mb-0">Asset Category</h5>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <mat-form-field appearance="fill" class="border rounded" style="height:40px !important;"  >
+                      <mat-label>Select</mat-label>
+                      <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+                      <mat-select formControlName="assetCategoryId" [value]="selectedCategoryItem">
+                        <mat-option *ngFor="let cat of categoryList" [value]="cat.assetCategoryId">
+                          {{cat.assetCategoryName}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-3">
+                    <h5 class="mb-0">Description</h5>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" formControlName="description"></textarea>
+                  </div>
+                </div>
+                
+                <div class="row">
+                  <div class="col-sm-3"></div>
+                  <div class="col-sm-9 text-secondary">
+                    <button class="btn btn-dark shadow-sm" type="button" (click)="addItem()" [disabled]="assetForm.invalid">Submit</button>
+                    <button class="shadow-sm btn btn-dark ms-2" type="button" (click)="reset()">Reset</button>
+                    <span class="ms-2 text-success" *ngIf="isAddedSuccessfulMessage">{{successfulMessage}}</span>
+                    <span class="ms-2 text-success" *ngIf="isDeletedSuccessfulMessage">{{successfulMessage}}</span>
+                  </div>
+                </div>
+              </div>
+            </form>
+
+
+
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="d-flex align-items-center mb-3">Project Status</h5>
+                <p>Web Design</p>
+                <div class="progress mb-3" style="height: 5px">
+                  <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p>Website Markup</p>
+                <div class="progress mb-3" style="height: 5px">
+                  <div class="progress-bar bg-danger" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p>One Page</p>
+                <div class="progress mb-3" style="height: 5px">
+                  <div class="progress-bar bg-success" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p>Mobile Template</p>
+                <div class="progress mb-3" style="height: 5px">
+                  <div class="progress-bar bg-warning" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p>Backend API</p>
+                <div class="progress" style="height: 5px">
+                  <div class="progress-bar bg-info" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="col-md-2 ms-3">
-      <label for="validationCustomUsername">Category</label>
-        <div class="" style="font-size: 11px;" >
-          <mat-form-field appearance="fill" class="border rounded" style="height:40px !important;"  >
-            <mat-label>Category</mat-label>
-            <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
-            <mat-select formControlName="assetCategoryId" [value]="selectedCategoryItem">
-              <mat-option *ngFor="let cat of categoryList" [value]="cat.assetCategoryId">
-                {{cat.assetCategoryName}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-      </div>
+
     </div>
   </div>
-  <div class="form-row">
-    <div class="col-md-3 mb-3">
-      <label for="validationCustom03">Make</label>
-      <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="make">
-      <div class="invalid-feedback">
-        Please provide a valid city.
-      </div>
-    </div>
-    <div class="col-md-3 mb-3">
-      <label for="validationCustom04">Model Number</label>
-      <input type="text" class="form-control" id="validationCustom04" placeholder="" required formControlName="modelNumber">
-      <div class="invalid-feedback">
-        Please provide a valid state.
-      </div>
-    </div>
-    <div class="col-md-3 mb-3">
-      <label for="validationCustom04">Department</label>
-      <div class="" style="font-size: 11px;" >
-        <mat-form-field appearance="fill" class="border rounded" style="height:40px !important;"  >
-          <mat-label>Department</mat-label>
-          <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
-          <mat-select formControlName="departmentId">
-            <mat-option *ngFor="let dep of departmentList" [value]="dep.id">
-              {{dep.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-    <!-- <div class="col-md-3 mb-3">
-      <label for="validationCustom04">Status</label>
-      <input type="text" class="form-control" id="validationCustom04" placeholder="" required formControlName="statusId">
-    </div> -->
+</div>
 
-    
-    <!--<div class="col-md-3 mb-3">
-      <label for="validationCustom05">Zip</label>
-      <input type="text" class="form-control" id="validationCustom05" placeholder="Zip" required formControlName="computerName">
-      <div class="invalid-feedback">
-        Please provide a valid zip.
-      </div>
-    </div>-->
-  </div>
 
-  <button class="btn btn-dark shadow-sm" type="button" (click)="addItem()" [disabled]="assetForm.invalid">Submit</button>
-  <button class="shadow-sm btn btn-dark ms-2" type="button" (click)="reset()">Reset</button>
-  <span class="ms-2 text-success" *ngIf="isAddedSuccessfulMessage">{{successfulMessage}}</span>
-  <span class="ms-2 text-success" *ngIf="isDeletedSuccessfulMessage">{{successfulMessage}}</span>
-</form>
+  
 
 

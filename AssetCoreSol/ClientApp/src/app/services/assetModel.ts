@@ -2,6 +2,7 @@ import { Category } from "../models/category";
 import { Department } from "../models/department";
 import { Status } from "../models/status";
 import { Asset } from "./asset";
+import { Employee } from "../models/employee";
 
  export class AssetModel {
 
@@ -10,4 +11,5 @@ import { Asset } from "./asset";
   categoryList: Category[];
   statusList: Status[];
   departmentList: Department[];
+  employeeList: Employee[];
 }

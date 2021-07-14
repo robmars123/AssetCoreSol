@@ -38,7 +38,7 @@ import { AssetModel } from '../services/assetModel';
 
     public departmentList: any;
     public statusList: any;
-
+    public employeeList: any;
     selectedItem: string = ""; //selected item for Status/Condition dropdownlist
     selectedCategoryItem: string = ""; //selected item for Category
     constructor(private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder, private router: ActivatedRoute) {
@@ -50,7 +50,8 @@ import { AssetModel } from '../services/assetModel';
         modelNumber: ['', Validators.required],
         statusId: ['', Validators.required],
         assetCategoryId: ['', Validators.required],
-        departmentID: ['', Validators.required]
+        departmentID: ['', Validators.required],
+        employeeId: ['', Validators.required]
       });
 
       
@@ -80,6 +81,7 @@ import { AssetModel } from '../services/assetModel';
       this.assetDetails.asset.statusId =  (this.assetForm.value.statusId) ? this.assetForm.value.statusId : this.assetDetails.asset.statusId;
       this.assetDetails.asset.assetCategoryId = (this.assetForm.value.assetCategoryId) ? this.assetForm.value.assetCategoryId : this.assetDetails.asset.assetCategoryId;
       this.assetDetails.asset.departmentID = (this.assetForm.value.departmentID) ? this.assetForm.value.departmentID : this.assetDetails.asset.departmentID;
+      this.assetDetails.asset.employeeId = (this.assetForm.value.employeeId) ? this.assetForm.value.employeeId : this.assetDetails.asset.employeeId;
       //add more fields. For now, keep those 4 above.
   
       this.EditAsset(); //call this to subscribe to service that calls AssetController
@@ -92,6 +94,7 @@ import { AssetModel } from '../services/assetModel';
         this.categoryList = this.assetDetails.categoryList;
         this.statusList = this.assetDetails.statusList;
         this.departmentList = this.assetDetails.departmentList;
+        this.employeeList = this.assetDetails.employeeList;
 
         //Default dropdown values
         //loop for Category dropdownlist
@@ -110,6 +113,13 @@ import { AssetModel } from '../services/assetModel';
         this.departmentList.forEach((dep: any) => {
           if(dep.id === this.assetDetails.asset.departmentID){
             this.assetForm.controls['departmentID'].setValue(this.assetDetails.asset.departmentID); //setting a value of the Category dropdownlist.
+          }
+        });
+
+        //loop for employee list
+        this.employeeList.forEach((emp: any)=> {
+          if(emp.id === this.assetDetails.asset.employeeId){
+            this.assetForm.controls['employeeId'].setValue(this.assetDetails.asset.employeeId); //setting selected value of employee dropdownlist
           }
         });
       });

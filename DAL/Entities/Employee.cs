@@ -8,7 +8,7 @@ namespace DAL.Entities
     public partial class Employee
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int EmployeeId { get; set; }
+        public int Id { get; set; }
 
         [StringLength(20)]
         public string FirstName { get; set; }

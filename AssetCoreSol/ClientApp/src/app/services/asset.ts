@@ -17,5 +17,5 @@ import { Category } from "../models/category";
   statusName: string;
   categoryName: string;
   departmentName: string;
-  categoryList: Category[];
+  employeeName: string;
 }
