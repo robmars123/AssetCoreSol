@@ -1,4 +1,3 @@
-
 import { ViewEncapsulation, ViewChild } from '@angular/core';
 import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -8,7 +7,6 @@ import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms'
 
 import { BehaviorSubject } from 'rxjs';
 import { AssetModel } from '../services/assetModel'; // Acts like a view model
-
 
 @Component({
   selector: 'app-assets',
@@ -36,6 +34,9 @@ export class AssetsComponent implements OnInit {
   public statusList: any;
   public employeeList: any;
   selectedCategoryItem: string = "";
+
+  //Search value
+  searchValue: string = "";
   constructor(private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder) {
     this.listData = [];
 

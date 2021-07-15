@@ -14,13 +14,15 @@ import { AssetDetailsComponent } from './assets/asset-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatSliderModule } from '@angular/material/slider';
+import { SearchFilterPipe } from './services/search-filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AssetsComponent,
-    AssetDetailsComponent
+    AssetDetailsComponent,
+    SearchFilterPipe
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
