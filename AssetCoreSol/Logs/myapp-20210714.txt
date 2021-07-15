@@ -12675,3 +12675,104 @@ FROM [Employees] AS [e]" (0723d8ff)
 2021-07-14T22:31:09.6473641-05:00 0HMA70VP2IHGL:00000005 [INF] Executing ObjectResult, writing value of type '"DAL.Models.AssetModel"'. (8a1b66c8)
 2021-07-14T22:31:09.6476122-05:00 0HMA70VP2IHGL:00000005 [INF] Executed action "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)" in 3.3207ms (afa2e885)
 2021-07-14T22:31:09.6476872-05:00 0HMA70VP2IHGL:00000005 [INF] Request finished in 3.6598ms 200 application/json; charset=utf-8 (791a596a)
+2021-07-14T22:33:15.3934330-05:00 0HMA70VP2IHGM:00000001 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/assets/index   (ca22a1cb)
+2021-07-14T22:33:15.3934965-05:00 0HMA70VP2IHGM:00000001 [INF] Policy execution successful. (0204925d)
+2021-07-14T22:33:15.3936074-05:00 0HMA70VP2IHGM:00000001 [INF] Route matched with "{action = \"Index\", controller = \"Assets\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[DAL.Models.AssetModel]] Index()" on controller "AssetCoreSol.Controllers.AssetsController" ("AssetCoreSol"). (122b2fdf)
+2021-07-14T22:33:15.3936419-05:00 0HMA70VP2IHGM:00000001 [INF] Policy execution successful. (0204925d)
+2021-07-14T22:33:15.3937739-05:00 0HMA70VP2IHGM:00000001 [INF] Executing action method "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)" - Validation state: Valid (dad538d7)
+2021-07-14T22:33:15.3941731-05:00 0HMA70VP2IHGM:00000001 [INF] Entity Framework Core "2.1.14-servicing-32113" initialized '"AssetDataAccess"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2021-07-14T22:33:15.3955437-05:00 0HMA70VP2IHGM:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[Id], [a].[AssetCategoryId], [a].[ComputerName], [a].[DateAcquired], [a].[DepartmentID], [a].[Description], [a].[EmployeeId], [a].[Make], [a].[ModelNumber], [a].[StatusId]
+FROM [Assets] AS [a]" (0723d8ff)
+2021-07-14T22:33:15.3968462-05:00 0HMA70VP2IHGM:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[AssetCategoryId], [a].[AssetCategoryName]
+FROM [AssetCategories] AS [a]" (0723d8ff)
+2021-07-14T22:33:15.3976657-05:00 0HMA70VP2IHGM:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[StatusId], [s].[Description]
+FROM [Status] AS [s]" (0723d8ff)
+2021-07-14T22:33:15.3986485-05:00 0HMA70VP2IHGM:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [d].[Id], [d].[Name]
+FROM [Departments] AS [d]" (0723d8ff)
+2021-07-14T22:33:15.3996216-05:00 0HMA70VP2IHGM:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [e].[Id], [e].[FirstName], [e].[LastName], [e].[OfficeLocation], [e].[Title]
+FROM [Employees] AS [e]" (0723d8ff)
+2021-07-14T22:33:15.3997726-05:00 0HMA70VP2IHGM:00000001 [INF] Executed action method "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)", returned result "Microsoft.AspNetCore.Mvc.ObjectResult" in 5.9621ms. (50a9e262)
+2021-07-14T22:33:15.3998229-05:00 0HMA70VP2IHGM:00000001 [INF] Executing ObjectResult, writing value of type '"DAL.Models.AssetModel"'. (8a1b66c8)
+2021-07-14T22:33:15.3999945-05:00 0HMA70VP2IHGM:00000001 [INF] Executed action "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)" in 6.3529ms (afa2e885)
+2021-07-14T22:33:15.4000616-05:00 0HMA70VP2IHGM:00000001 [INF] Request finished in 6.6651ms 200 application/json; charset=utf-8 (791a596a)
+2021-07-14T22:33:20.1131062-05:00 0HMA70VP2IHGM:00000002 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/assets/index   (ca22a1cb)
+2021-07-14T22:33:20.1131793-05:00 0HMA70VP2IHGM:00000002 [INF] Policy execution successful. (0204925d)
+2021-07-14T22:33:20.1132885-05:00 0HMA70VP2IHGM:00000002 [INF] Route matched with "{action = \"Index\", controller = \"Assets\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[DAL.Models.AssetModel]] Index()" on controller "AssetCoreSol.Controllers.AssetsController" ("AssetCoreSol"). (122b2fdf)
+2021-07-14T22:33:20.1133212-05:00 0HMA70VP2IHGM:00000002 [INF] Policy execution successful. (0204925d)
+2021-07-14T22:33:20.1134584-05:00 0HMA70VP2IHGM:00000002 [INF] Executing action method "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)" - Validation state: Valid (dad538d7)
+2021-07-14T22:33:20.1137082-05:00 0HMA70VP2IHGM:00000002 [INF] Entity Framework Core "2.1.14-servicing-32113" initialized '"AssetDataAccess"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2021-07-14T22:33:20.1142379-05:00 0HMA70VP2IHGM:00000002 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[Id], [a].[AssetCategoryId], [a].[ComputerName], [a].[DateAcquired], [a].[DepartmentID], [a].[Description], [a].[EmployeeId], [a].[Make], [a].[ModelNumber], [a].[StatusId]
+FROM [Assets] AS [a]" (0723d8ff)
+2021-07-14T22:33:20.1148749-05:00 0HMA70VP2IHGM:00000002 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[AssetCategoryId], [a].[AssetCategoryName]
+FROM [AssetCategories] AS [a]" (0723d8ff)
+2021-07-14T22:33:20.1153121-05:00 0HMA70VP2IHGM:00000002 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[StatusId], [s].[Description]
+FROM [Status] AS [s]" (0723d8ff)
+2021-07-14T22:33:20.1157198-05:00 0HMA70VP2IHGM:00000002 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [d].[Id], [d].[Name]
+FROM [Departments] AS [d]" (0723d8ff)
+2021-07-14T22:33:20.1161785-05:00 0HMA70VP2IHGM:00000002 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [e].[Id], [e].[FirstName], [e].[LastName], [e].[OfficeLocation], [e].[Title]
+FROM [Employees] AS [e]" (0723d8ff)
+2021-07-14T22:33:20.1163360-05:00 0HMA70VP2IHGM:00000002 [INF] Executed action method "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)", returned result "Microsoft.AspNetCore.Mvc.ObjectResult" in 2.8372ms. (50a9e262)
+2021-07-14T22:33:20.1164092-05:00 0HMA70VP2IHGM:00000002 [INF] Executing ObjectResult, writing value of type '"DAL.Models.AssetModel"'. (8a1b66c8)
+2021-07-14T22:33:20.1166534-05:00 0HMA70VP2IHGM:00000002 [INF] Executed action "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)" in 3.3278ms (afa2e885)
+2021-07-14T22:33:20.1167342-05:00 0HMA70VP2IHGM:00000002 [INF] Request finished in 3.726ms 200 application/json; charset=utf-8 (791a596a)
+2021-07-14T22:34:00.1081920-05:00 0HMA70VP2IHGM:00000003 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/assets/16006   (ca22a1cb)
+2021-07-14T22:34:00.1082381-05:00 0HMA70VP2IHGM:00000003 [INF] Policy execution successful. (0204925d)
+2021-07-14T22:34:00.1083171-05:00 0HMA70VP2IHGM:00000003 [INF] Route matched with "{action = \"GetAssetById\", controller = \"Assets\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[DAL.Models.AssetModel]] GetAssetById(System.String)" on controller "AssetCoreSol.Controllers.AssetsController" ("AssetCoreSol"). (122b2fdf)
+2021-07-14T22:34:00.1083407-05:00 0HMA70VP2IHGM:00000003 [INF] Policy execution successful. (0204925d)
+2021-07-14T22:34:00.1084887-05:00 0HMA70VP2IHGM:00000003 [INF] Executing action method "AssetCoreSol.Controllers.AssetsController.GetAssetById (AssetCoreSol)" - Validation state: Valid (dad538d7)
+2021-07-14T22:34:00.1086606-05:00 0HMA70VP2IHGM:00000003 [INF] Entity Framework Core "2.1.14-servicing-32113" initialized '"AssetDataAccess"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2021-07-14T22:34:00.1105045-05:00 0HMA70VP2IHGM:00000003 [INF] Executed DbCommand ("1"ms) [Parameters=["@__get_Item_0='?' (DbType = Int32)"], CommandType='Text', CommandTimeout='30']"
+""SELECT TOP(1) [e].[Id], [e].[AssetCategoryId], [e].[ComputerName], [e].[DateAcquired], [e].[DepartmentID], [e].[Description], [e].[EmployeeId], [e].[Make], [e].[ModelNumber], [e].[StatusId]
+FROM [Assets] AS [e]
+WHERE [e].[Id] = @__get_Item_0" (0723d8ff)
+2021-07-14T22:34:00.1115579-05:00 0HMA70VP2IHGM:00000003 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[AssetCategoryId], [a].[AssetCategoryName]
+FROM [AssetCategories] AS [a]" (0723d8ff)
+2021-07-14T22:34:00.1123729-05:00 0HMA70VP2IHGM:00000003 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[StatusId], [s].[Description]
+FROM [Status] AS [s]" (0723d8ff)
+2021-07-14T22:34:00.1131822-05:00 0HMA70VP2IHGM:00000003 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [d].[Id], [d].[Name]
+FROM [Departments] AS [d]" (0723d8ff)
+2021-07-14T22:34:00.1138845-05:00 0HMA70VP2IHGM:00000003 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [e].[Id], [e].[FirstName], [e].[LastName], [e].[OfficeLocation], [e].[Title]
+FROM [Employees] AS [e]" (0723d8ff)
+2021-07-14T22:34:00.1139858-05:00 0HMA70VP2IHGM:00000003 [INF] Executed action method "AssetCoreSol.Controllers.AssetsController.GetAssetById (AssetCoreSol)", returned result "Microsoft.AspNetCore.Mvc.ObjectResult" in 5.4669ms. (50a9e262)
+2021-07-14T22:34:00.1140321-05:00 0HMA70VP2IHGM:00000003 [INF] Executing ObjectResult, writing value of type '"DAL.Models.AssetModel"'. (8a1b66c8)
+2021-07-14T22:34:00.1141907-05:00 0HMA70VP2IHGM:00000003 [INF] Executed action "AssetCoreSol.Controllers.AssetsController.GetAssetById (AssetCoreSol)" in 5.8455ms (afa2e885)
+2021-07-14T22:34:00.1142515-05:00 0HMA70VP2IHGM:00000003 [INF] Request finished in 6.0902ms 200 application/json; charset=utf-8 (791a596a)
+2021-07-14T22:34:01.0619538-05:00 0HMA70VP2IHGM:00000004 [INF] Request starting HTTP/1.1 GET https://localhost:5001/api/assets/index   (ca22a1cb)
+2021-07-14T22:34:01.0620854-05:00 0HMA70VP2IHGM:00000004 [INF] Policy execution successful. (0204925d)
+2021-07-14T22:34:01.0622208-05:00 0HMA70VP2IHGM:00000004 [INF] Route matched with "{action = \"Index\", controller = \"Assets\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[DAL.Models.AssetModel]] Index()" on controller "AssetCoreSol.Controllers.AssetsController" ("AssetCoreSol"). (122b2fdf)
+2021-07-14T22:34:01.0622587-05:00 0HMA70VP2IHGM:00000004 [INF] Policy execution successful. (0204925d)
+2021-07-14T22:34:01.0623893-05:00 0HMA70VP2IHGM:00000004 [INF] Executing action method "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)" - Validation state: Valid (dad538d7)
+2021-07-14T22:34:01.0627198-05:00 0HMA70VP2IHGM:00000004 [INF] Entity Framework Core "2.1.14-servicing-32113" initialized '"AssetDataAccess"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2021-07-14T22:34:01.0636564-05:00 0HMA70VP2IHGM:00000004 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[Id], [a].[AssetCategoryId], [a].[ComputerName], [a].[DateAcquired], [a].[DepartmentID], [a].[Description], [a].[EmployeeId], [a].[Make], [a].[ModelNumber], [a].[StatusId]
+FROM [Assets] AS [a]" (0723d8ff)
+2021-07-14T22:34:01.0644190-05:00 0HMA70VP2IHGM:00000004 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[AssetCategoryId], [a].[AssetCategoryName]
+FROM [AssetCategories] AS [a]" (0723d8ff)
+2021-07-14T22:34:01.0647455-05:00 0HMA70VP2IHGM:00000004 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[StatusId], [s].[Description]
+FROM [Status] AS [s]" (0723d8ff)
+2021-07-14T22:34:01.0650616-05:00 0HMA70VP2IHGM:00000004 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [d].[Id], [d].[Name]
+FROM [Departments] AS [d]" (0723d8ff)
+2021-07-14T22:34:01.0653911-05:00 0HMA70VP2IHGM:00000004 [INF] Executed DbCommand ("0"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [e].[Id], [e].[FirstName], [e].[LastName], [e].[OfficeLocation], [e].[Title]
+FROM [Employees] AS [e]" (0723d8ff)
+2021-07-14T22:34:01.0655489-05:00 0HMA70VP2IHGM:00000004 [INF] Executed action method "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)", returned result "Microsoft.AspNetCore.Mvc.ObjectResult" in 3.1189ms. (50a9e262)
+2021-07-14T22:34:01.0656133-05:00 0HMA70VP2IHGM:00000004 [INF] Executing ObjectResult, writing value of type '"DAL.Models.AssetModel"'. (8a1b66c8)
+2021-07-14T22:34:01.0658367-05:00 0HMA70VP2IHGM:00000004 [INF] Executed action "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)" in 3.5803ms (afa2e885)
+2021-07-14T22:34:01.0660353-05:00 0HMA70VP2IHGM:00000004 [INF] Request finished in 4.1058ms 200 application/json; charset=utf-8 (791a596a)

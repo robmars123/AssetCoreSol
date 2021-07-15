@@ -21,6 +21,7 @@ loweredCaseSearchValue: string = "";
                           || asset.employeeName.toLowerCase().includes(this.loweredCaseSearchValue)
                           || asset.categoryName.toLowerCase().includes(this.loweredCaseSearchValue)
                           || asset.description.toLowerCase().includes(this.loweredCaseSearchValue)
+                          || asset.statusName.toLowerCase().includes(this.loweredCaseSearchValue)
                           );
 
     return null;
