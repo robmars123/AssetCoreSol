@@ -8,3 +8,38 @@
     border-radius: 4px 4px 0 0;
     padding: 3px 5px 2px 8px !important;
 }
+
+
+/* centered text on HR */
+.strike {
+  display: block;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap; 
+}
+
+.strike > span {
+  position: relative;
+  display: inline-block;
+  color: rgb(95, 95, 95) ;
+}
+
+.strike > span:before,
+.strike > span:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 9999px;
+  height: 1px;
+  background: rgb(192, 192, 192);
+}
+
+.strike > span:before {
+  right: 100%;
+  margin-right: 10px;
+}
+
+.strike > span:after {
+  left: 100%;
+  margin-left: 5px;
+}

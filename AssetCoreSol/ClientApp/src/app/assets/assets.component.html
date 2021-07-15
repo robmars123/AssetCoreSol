@@ -49,35 +49,56 @@
         <div class="col-lg-4">
           <div class="card shadow-sm">
             <div class="card-body">
-              <span>Tasks</span>
-              <hr class="my-4">
+              <div class="sidebar-search">
+                <div>
+                  <div class="input-group">
+                    <input type="text" class="form-control search-menu" placeholder="Search...">
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="strike mt-4">
+                <span class="disabled">
+                  Tasks
+                </span>
+              </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                  <i class="fas fa-arrow-right"></i>
                   <a>View Report</a>
-                  <span class="text-secondary">https://bootdey.com</span>
                 </li>
 
               </ul>
             </div>
             <div class="card-body">
-              <span>Setup</span>
-              <hr class="my-4">
+              <div class="strike">
+                <span>
+                  Setup
+                </span>
+              </div>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <a>View Report</a>
-                  <span class="text-secondary">https://bootdey.com</span>
+                  <i class="fas fa-arrow-right"></i>
+                  <a>Add or Delete Employees</a>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <a>Add Asset</a>
-                  <span class="text-secondary">https://bootdey.com</span>
+                  <i class="fas fa-arrow-right"></i>
+                  <a>Add or Asset Categories</a>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <a>Add Employee</a>
-                  <span class="text-secondary">https://bootdey.com</span>
+                  <i class="fas fa-arrow-right"></i>
+                  <a>Add or Delete Status</a>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <a>Add Department</a>
-                  <span class="text-secondary">https://bootdey.com</span>
+                  <i class="fas fa-arrow-right"></i>
+                  <a>Add or Delete Departments</a>
                 </li>
               </ul>
             </div>
@@ -190,8 +211,8 @@
                 <div class="row">
                   <div class="col-sm-3"></div>
                   <div class="col-sm-9 text-secondary">
-                    <button class="btn btn-dark shadow-sm" type="button" (click)="addItem()" [disabled]="assetForm.invalid">Submit</button>
-                    <button class="shadow-sm btn btn-dark ms-2" type="button" (click)="reset()">Reset</button>
+                    <button class="btn btn-dark shadow" type="button" (click)="addItem()" [disabled]="assetForm.invalid">Submit</button>
+                    <button class="shadow btn btn-dark ms-2" type="button" (click)="reset()">Reset</button>
                     <span class="ms-2 text-success" *ngIf="isAddedSuccessfulMessage">{{successfulMessage}}</span>
                     <span class="ms-2 text-success" *ngIf="isDeletedSuccessfulMessage">{{successfulMessage}}</span>
                   </div>
@@ -201,7 +222,7 @@
 
 
 
-        <div class="row">
+        <!-- <div class="row"> 
           <div class="col-sm-12">
             <div class="card">
               <div class="card-body">
@@ -231,7 +252,7 @@
           </div>
         </div>
       </div>
-
+    -->
     </div>
   </div>
 </div>

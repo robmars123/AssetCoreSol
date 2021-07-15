@@ -5,45 +5,59 @@
   <div class="main-body">
     <div class="row">
       
-        <div class="col-lg-4">
-          <div class="card">
-            <div class="card-body">
-              <span>Tasks</span>
-              <hr class="my-4">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <a>View Report</a>
-                  <span class="text-secondary">https://bootdey.com</span>
-                </li>
+      <div class="col-lg-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="col-sm-9 text-secondary">
+              <button class="btn btn-dark  shadow" type="button">Back to List</button>
+            </div>
 
-              </ul>
+
+            <div class="strike mt-4">
+              <span class="disabled">
+                Tasks
+              </span>
             </div>
-            <div class="card-body">
-              <span>Setup</span>
-              <hr class="my-4">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <a>View Report</a>
-                  <span class="text-secondary">https://bootdey.com</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <a>Add Asset</a>
-                  <span class="text-secondary">https://bootdey.com</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <a>Add Employee</a>
-                  <span class="text-secondary">https://bootdey.com</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <a>Add Department</a>
-                  <span class="text-secondary">https://bootdey.com</span>
-                </li>
-              </ul>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <i class="fas fa-arrow-right"></i>
+                <a>View Report</a>
+              </li>
+
+            </ul>
+          </div>
+          <div class="card-body">
+            <div class="strike">
+              <span>
+                Setup
+              </span>
             </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <i class="fas fa-arrow-right"></i>
+                <a>Add or Delete Employees</a>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <i class="fas fa-arrow-right"></i>
+                <a>Add or Asset Categories</a>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <i class="fas fa-arrow-right"></i>
+                <a>Add or Delete Status</a>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                <i class="fas fa-arrow-right"></i>
+                <a>Add or Delete Departments</a>
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
+      
         <div class="col-lg-8">
-        
+          <div class="card-header bg-secondary text-light shadow-sm">
+            <span>Asset Details</span>
+          </div>
             <form class="card needs-validation border p-3 assetAddForm shadow-sm" [formGroup]="assetForm" ngNativeValidate>
               <div class="card-body">
                 <div class="row mb-3">
@@ -150,8 +164,8 @@
                     </div>
                     <div class="col-sm-3"></div><div class="col-sm-3"></div><div class="col-sm-3"></div>
                   <div class="col-sm-9 text-secondary">
-                    <button class="btn btn-dark" type="button" (click)="editItem()" [disabled]="!isEditChecked">Submit</button>
-                    <button class="ms-2 btn btn-dark" type="button" (click)="deleteItem('/assets')">Delete</button>
+                    <button class="btn btn-dark shadow" type="button" (click)="editItem()" [disabled]="!isEditChecked">Submit</button>
+                    <button class="ms-2 btn btn-dark shadow" type="button" (click)="deleteItem('/assets')">Delete</button>
                   </div>
                 </div>
               </div>
