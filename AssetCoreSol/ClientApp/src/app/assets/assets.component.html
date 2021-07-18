@@ -13,6 +13,7 @@
           <th>Asset Id</th>
           <th>Computer Name</th>
           <th>Department</th>
+          <th>Model</th>
           <th>Comments</th>
           <th>Category</th>
           <th>Status</th>
@@ -21,10 +22,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let asset of getAssetsResponse.assetList | searchFilter: searchValue">
+        <tr *ngFor="let asset of getAssetsResponse.assetList | slice:startIndex:endIndex | searchFilter: searchValue ">
           <td>{{ asset.id }}</td>
           <td>{{ asset.computerName }}</td>
           <td>{{ asset.departmentName }}</td>
+          <td>{{ asset.modelNumber }}</td>
           <td>{{ asset.description }}</td>
           <td>{{ asset.categoryName }}</td>
           <td>{{ asset.statusName }}</td>
@@ -39,223 +41,259 @@
     </table>
     </div>
     <div class="card-footer text-muted bg-secondary">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+          <li *ngFor="let i of getNumberOfArray(getAssetsResponse.assetList.length); let in = index" class="page-item"><a class="page-link" (click)="updatePageIndex(in)">{{in+1}}</a></li>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </nav>
     </div>
 </div>
 
-<div class="container mt-4">
-  <div class="main-body">
-    <div class="row">
-      
-        <div class="col-lg-4">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <div class="sidebar-search">
-                <div>
-                  <div class="input-group">
-                    <input type="text" class="form-control search-menu" placeholder="Search..." [(ngModel)]="searchValue">
-                    <div class="input-group-append">
-                      <span class="input-group-text">
-                        <i class="fa fa-search" aria-hidden="true"></i>
-                      </span>
+
+<div class="row mt-4">
+  <div class="col-sm-3">
+    <div class="">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="sidebar-search">
+            <div>
+              <div class="input-group">
+                <input type="text" class="form-control search-menu" placeholder="Search..." [(ngModel)]="searchValue">
+                <div class="input-group-append">
+                  <span class="input-group-text">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="strike mt-4">
+            <span class="disabled">
+              Tasks
+            </span>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <i class="fas fa-arrow-right"></i>
+              <a>View Report</a>
+            </li>
+
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="strike">
+            <span>
+              Setup
+            </span>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <i class="fas fa-arrow-right"></i>
+              <a>Add or Delete Employees</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <i class="fas fa-arrow-right"></i>
+              <a>Add or Asset Categories</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <i class="fas fa-arrow-right"></i>
+              <a>Add or Delete Status</a>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+              <i class="fas fa-arrow-right"></i>
+              <a>Add or Delete Departments</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div>
+      <div class="card-header bg-secondary text-light shadow-sm">
+        <span>Add New Asset</span>
+      </div>
+        <form class="needs-validation p-3 assetAddForm shadow-sm" [formGroup]="assetForm" ngNativeValidate>
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h5 class="mb-0">Computer Name</h5>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control" id="validationCustom01" placeholder="JohnDoe's PC" value="Mark" required formControlName="computerName">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h5 class="mb-0">Make</h5>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="make">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h5 class="mb-0">Model</h5>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="modelNumber">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h5 class="mb-0">Department</h5>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <mat-form-field appearance="fill" class="" >
+                  <mat-label>Select</mat-label>
+                  <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+                  <mat-select formControlName="departmentId">
+                    <mat-option *ngFor="let dep of departmentList" [value]="dep.id">
+                      {{dep.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h5 class="mb-0">Employee</h5>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <!-- <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="employeeId"> -->
+                <mat-form-field appearance="fill" class="" style="height:40px !important;"  >
+                  <mat-label>Select</mat-label>
+                  <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+                  <mat-select formControlName="employeeId">
+                    <mat-option *ngFor="let emp of employeeList" [value]="emp.id">
+                      {{emp.firstName +  ' ' + emp.lastName }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h5 class="mb-0">Status</h5>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <mat-form-field appearance="fill" class="" style="height:40px !important;"  >
+                  <mat-label>Select</mat-label>
+                  <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+                  <mat-select formControlName="statusId" [value]="selectedItem">
+                    <mat-option *ngFor="let status of statusList" [value]="status.statusId">
+                      {{status.description}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h5 class="mb-0">Asset Category</h5>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <mat-form-field appearance="fill" class="border rounded" style="height:40px !important;"  >
+                  <mat-label>Select</mat-label>
+                  <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
+                  <mat-select formControlName="assetCategoryId" [value]="selectedCategoryItem">
+                    <mat-option *ngFor="let cat of categoryList" [value]="cat.assetCategoryId">
+                      {{cat.assetCategoryName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-3">
+                <h5 class="mb-0">Description</h5>
+              </div>
+              <div class="col-sm-9 text-secondary">
+                <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" formControlName="description"></textarea>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-sm-3"></div>
+              <div class="col-sm-9 text-secondary">
+                <button class="btn btn-dark shadow" type="button" (click)="addItem()" [disabled]="assetForm.invalid">Submit</button>
+                <button class="shadow btn btn-dark ms-2" type="button" (click)="reset()">Reset</button>
+                <span class="ms-2 text-success" *ngIf="isAddedSuccessfulMessage">{{successfulMessage}}</span>
+                <span class="ms-2 text-success" *ngIf="isDeletedSuccessfulMessage">{{successfulMessage}}</span>
+              </div>
+            </div>
+          </div>
+        </form>
+  </div>
+  </div>
+  <div class="col-sm-3">
+            <div class="">
+
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <div class="sidebar-search">
+                  <div>
+                    <div class="input-group">
+                      <input type="text" class="form-control search-menu" placeholder="Search..." [(ngModel)]="searchValue">
+                      <div class="input-group-append">
+                        <span class="input-group-text">
+                          <i class="fa fa-search" aria-hidden="true"></i>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
+  
+  
+  
+                <div class="strike mt-4">
+                  <span class="disabled">
+                    Tasks
+                  </span>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <i class="fas fa-arrow-right"></i>
+                    <a>View Report</a>
+                  </li>
+  
+                </ul>
               </div>
-
-
-
-              <div class="strike mt-4">
-                <span class="disabled">
-                  Tasks
-                </span>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <i class="fas fa-arrow-right"></i>
-                  <a>View Report</a>
-                </li>
-
-              </ul>
-            </div>
-            <div class="card-body">
-              <div class="strike">
-                <span>
-                  Setup
-                </span>
-              </div>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <i class="fas fa-arrow-right"></i>
-                  <a>Add or Delete Employees</a>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <i class="fas fa-arrow-right"></i>
-                  <a>Add or Asset Categories</a>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <i class="fas fa-arrow-right"></i>
-                  <a>Add or Delete Status</a>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                  <i class="fas fa-arrow-right"></i>
-                  <a>Add or Delete Departments</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-8">
-          <div class="card-header bg-secondary text-light shadow-sm">
-            <span>Add New Asset</span>
-          </div>
-            <form class="card needs-validation border p-3 assetAddForm shadow-sm" [formGroup]="assetForm" ngNativeValidate>
               <div class="card-body">
-                <div class="row mb-3">
-                  <div class="col-sm-3">
-                    <h5 class="mb-0">Computer Name</h5>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <input type="text" class="form-control" id="validationCustom01" placeholder="JohnDoe's PC" value="Mark" required formControlName="computerName">
-                  </div>
+                <div class="strike">
+                  <span>
+                    Setup
+                  </span>
                 </div>
-                <div class="row mb-3">
-                  <div class="col-sm-3">
-                    <h5 class="mb-0">Make</h5>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="make">
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-sm-3">
-                    <h5 class="mb-0">Model</h5>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="modelNumber">
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-sm-3">
-                    <h5 class="mb-0">Department</h5>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <mat-form-field appearance="fill" class="" >
-                      <mat-label>Select</mat-label>
-                      <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
-                      <mat-select formControlName="departmentId">
-                        <mat-option *ngFor="let dep of departmentList" [value]="dep.id">
-                          {{dep.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-sm-3">
-                    <h5 class="mb-0">Employee</h5>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <!-- <input type="text" class="form-control" id="validationCustom03" placeholder="" required formControlName="employeeId"> -->
-                    <mat-form-field appearance="fill" class="" style="height:40px !important;"  >
-                      <mat-label>Select</mat-label>
-                      <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
-                      <mat-select formControlName="employeeId">
-                        <mat-option *ngFor="let emp of employeeList" [value]="emp.id">
-                          {{emp.firstName +  ' ' + emp.lastName }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-sm-3">
-                    <h5 class="mb-0">Status</h5>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <mat-form-field appearance="fill" class="" style="height:40px !important;"  >
-                      <mat-label>Select</mat-label>
-                      <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
-                      <mat-select formControlName="statusId" [value]="selectedItem">
-                        <mat-option *ngFor="let status of statusList" [value]="status.statusId">
-                          {{status.description}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-sm-3">
-                    <h5 class="mb-0">Asset Category</h5>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <mat-form-field appearance="fill" class="border rounded" style="height:40px !important;"  >
-                      <mat-label>Select</mat-label>
-                      <!-- [value]=selectedItem is important to set default or selected value from dropdownlist -->
-                      <mat-select formControlName="assetCategoryId" [value]="selectedCategoryItem">
-                        <mat-option *ngFor="let cat of categoryList" [value]="cat.assetCategoryId">
-                          {{cat.assetCategoryName}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <div class="col-sm-3">
-                    <h5 class="mb-0">Description</h5>
-                  </div>
-                  <div class="col-sm-9 text-secondary">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" formControlName="description"></textarea>
-                  </div>
-                </div>
-                
-                <div class="row">
-                  <div class="col-sm-3"></div>
-                  <div class="col-sm-9 text-secondary">
-                    <button class="btn btn-dark shadow" type="button" (click)="addItem()" [disabled]="assetForm.invalid">Submit</button>
-                    <button class="shadow btn btn-dark ms-2" type="button" (click)="reset()">Reset</button>
-                    <span class="ms-2 text-success" *ngIf="isAddedSuccessfulMessage">{{successfulMessage}}</span>
-                    <span class="ms-2 text-success" *ngIf="isDeletedSuccessfulMessage">{{successfulMessage}}</span>
-                  </div>
-                </div>
-              </div>
-            </form>
-
-
-
-        <!-- <div class="row"> 
-          <div class="col-sm-12">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="d-flex align-items-center mb-3">Project Status</h5>
-                <p>Web Design</p>
-                <div class="progress mb-3" style="height: 5px">
-                  <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p>Website Markup</p>
-                <div class="progress mb-3" style="height: 5px">
-                  <div class="progress-bar bg-danger" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p>One Page</p>
-                <div class="progress mb-3" style="height: 5px">
-                  <div class="progress-bar bg-success" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p>Mobile Template</p>
-                <div class="progress mb-3" style="height: 5px">
-                  <div class="progress-bar bg-warning" role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p>Backend API</p>
-                <div class="progress" style="height: 5px">
-                  <div class="progress-bar bg-info" role="progressbar" style="width: 66%" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <i class="fas fa-arrow-right"></i>
+                    <a>Add or Delete Employees</a>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <i class="fas fa-arrow-right"></i>
+                    <a>Add or Asset Categories</a>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <i class="fas fa-arrow-right"></i>
+                    <a>Add or Delete Status</a>
+                  </li>
+                  <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                    <i class="fas fa-arrow-right"></i>
+                    <a>Add or Delete Departments</a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    -->
-    </div>
   </div>
 </div>
+
 
 
   

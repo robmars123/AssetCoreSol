@@ -16,6 +16,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider';
 import { SearchFilterPipe } from './services/search-filter.pipe';
 
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +34,9 @@ import { SearchFilterPipe } from './services/search-filter.pipe';
     ReactiveFormsModule,
     FormsModule,
     MatSliderModule,
+    MatPaginatorModule,
     MatSelectModule,
+    MatTableModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       //Add more components here

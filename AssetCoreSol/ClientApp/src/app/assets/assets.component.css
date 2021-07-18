@@ -33,7 +33,7 @@ thead,th     { background:#fff; color: rgb(107, 107, 107)}
 }
 
 * {
-    border-radius: 0 !important;
+    /* border-radius: 0 !important; */
     border-width: 1px;
   }
 
@@ -42,7 +42,7 @@ thead,th     { background:#fff; color: rgb(107, 107, 107)}
 
   /**/
   body{
-    background: #f7f7ff;
+    background: rgb(246, 249, 252);
     margin-top:20px;
 }
 .card {

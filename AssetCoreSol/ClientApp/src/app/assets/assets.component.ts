@@ -7,6 +7,10 @@ import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms'
 
 import { BehaviorSubject } from 'rxjs';
 import { AssetModel } from '../services/assetModel'; // Acts like a view model
+import { Asset } from '../services/asset';
+import { PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-assets',
@@ -35,6 +39,9 @@ export class AssetsComponent implements OnInit {
   public employeeList: any;
   selectedCategoryItem: string = "";
 
+
+  startIndex=  0;
+  endIndex = 10;
   //Search value
   searchValue: string = "";
   constructor(private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder) {
@@ -51,24 +58,6 @@ export class AssetsComponent implements OnInit {
       employeeId: ['', Validators.required]
     })
   }
-
-  //add record
-  addItem() {
-
-    if (this.assetForm.valid) {
-      //this.assetForm.value.statusId = StatusEnum[this.assetForm.value.statusId]; //get enum number value instead of string.
-      this.listData.push(this.assetForm.value); //100% got the data here.
-      this.assetForm.reset(); //use this after the form is added to db
-
-      this.AddAsset();
-    }
-  }
-
-  reset() {
-    this.assetForm.reset();
-  }
-
-  //page loads
   ngOnInit() {
     this.GetAssets();
     this.isLoading.next(true);
@@ -86,16 +75,43 @@ export class AssetsComponent implements OnInit {
       this.successfulMessage = successfullyDeleted;
       localStorage.removeItem(this.successfullyDeletedMessageKey);
     }
-    var test = this.getAssetsResponse.assetList;
+   
     this.setTitle(this.title);
+
   }
 
+
+  //add record
+  addItem() {
+
+    if (this.assetForm.valid) {
+      //this.assetForm.value.statusId = StatusEnum[this.assetForm.value.statusId]; //get enum number value instead of string.
+      this.listData.push(this.assetForm.value); //100% got the data here.
+      this.assetForm.reset(); //use this after the form is added to db
+
+      this.AddAsset();
+    }
+  }
+
+  reset() {
+    this.assetForm.reset();
+  }
+
+  getNumberOfArray(length: number){
+    return new Array(Math.ceil(length/10));
+  }
+
+  updatePageIndex(pageIndex: number){
+    this.startIndex = pageIndex * 10;
+    this.endIndex = this.startIndex + 10;
+  }
   //get list
   GetAssets() {
       this.assetService.getAssets().subscribe((data) => {
       this.getAssetsResponse = data;
       this.totalAssets = this.getAssetsResponse.assetList.length;
 
+     // this.pageSizeOptions = this.totalAssets; //page size based on total assets
       let categories = this.getAssetsResponse.categoryList;
       let statusList = this.getAssetsResponse.statusList;
       let departmentList = this.getAssetsResponse.departmentList;
