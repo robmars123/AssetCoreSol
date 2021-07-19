@@ -3,6 +3,7 @@ import { Department } from "../models/department";
 import { Status } from "../models/status";
 import { Asset } from "./asset";
 import { Employee } from "../models/employee";
+import { AssetAuditLog } from "../models/assetAuditLog";
 
  export class AssetModel {
 
@@ -12,4 +13,5 @@ import { Employee } from "../models/employee";
   statusList: Status[];
   departmentList: Department[];
   employeeList: Employee[];
+  assetAuditLogList: AssetAuditLog[];
 }

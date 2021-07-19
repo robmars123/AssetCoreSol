@@ -23,6 +23,7 @@ namespace DAL
         public virtual DbSet<Maintenance> Maintenances { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<AssetAuditLog> AssetAuditLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

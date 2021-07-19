@@ -33,6 +33,7 @@ namespace DAL.Entities
         public string ComputerName { get; set; }
 
         public DateTime? DateAcquired { get; set; }
+        public DateTime? DateModified { get ;set; }
 
         //[NotMapped]
         //public List<AssetCategory> CategoryList { get; set; }

@@ -42,7 +42,8 @@ namespace AssetCoreSol.Controllers
                 CategoryList = GetCategoryList(),
                 StatusList = GetStatusList(),
                 DepartmentList = GetDepartmentList(),
-                EmployeeList = GetEmployeeList()
+                EmployeeList = GetEmployeeList(),
+                AssetAuditLogList = GetLogActivityList()
             };
             return assetPage;
         }
@@ -70,6 +71,11 @@ namespace AssetCoreSol.Controllers
             return _dal.Employees.ToList();
         }
 
+        private IEnumerable<AssetAuditLog> GetLogActivityList()
+        {
+            return _dal.AssetAuditLogs.OrderByDescending(x=>x).ToList();
+        }
+
         //Get single record
         [HttpGet("{id}")]
         [Consumes("application/json")]
@@ -82,7 +88,8 @@ namespace AssetCoreSol.Controllers
                 CategoryList = GetCategoryList(),
                 StatusList = GetStatusList(),
                 DepartmentList = GetDepartmentList(),
-                EmployeeList = GetEmployeeList()
+                EmployeeList = GetEmployeeList(),
+                AssetAuditLogList = GetLogActivityList()
             };
             return assetPage;
         }
@@ -110,8 +117,16 @@ namespace AssetCoreSol.Controllers
                     ModelNumber = newAssetModel.ModelNumber,
                     StatusId = newAssetModel.StatusId
                 };
+
                 _dal.Assets.Add(_asset);
                 await _dal.SaveChangesAsync();
+
+                //save the last asset record added in the system to AssetAuditLog
+                saveLatestRecordToAuditLog(_asset);
+
+
+
+
                 return  CreatedAtAction(nameof(GetAssetById), new { id = _asset.Id, controller = "assets" }, newAssetModel);
             }
             catch (Exception e)
@@ -121,28 +136,97 @@ namespace AssetCoreSol.Controllers
             }
         }
 
+        private void saveLatestRecordToAuditLog(Asset latest)
+        {
+            var latestAdded = _dal.Assets.Find(latest.Id);
+            AssetAuditLog _assetAuditLog = new AssetAuditLog();
+            _assetAuditLog.AssetId = latestAdded.Id;
+            _assetAuditLog.LogMessage = "Successfully added Asset: " + latestAdded.Id + " " + _assetAuditLog.LogMessage;
+            _assetAuditLog.EntryDate = DateTime.Now;
+            _assetAuditLog.ProcessName = "Added";
+            _dal.AssetAuditLogs.Add(_assetAuditLog);
+
+            _dal.SaveChangesAsync();
+        }
         [HttpPut("{id}")]
         [Consumes("application/json")]
         public async Task<IActionResult> EditAsset([FromBody] Asset editedModel)
         {
             try
             {
+                string changeLog = "";
                 if (editedModel == null)
                 {
                     _log.LogError("model parameter passed is null.");
                 }
                 Asset _asset = _dal.Assets.Find(editedModel.Id);
-
+                AssetAuditLog _assetAuditLog = new AssetAuditLog();
+                //assigned the new changes to a found asset record
                     _asset.AssetCategoryId = editedModel.AssetCategoryId;
-                    _asset.DateAcquired = DateTime.Today;
-                    _asset.ComputerName = editedModel.ComputerName;
-                    _asset.DepartmentID = editedModel.DepartmentID;
-                    _asset.Description = editedModel.Description;
-                    _asset.EmployeeId = editedModel.EmployeeId;
-                    _asset.Make = editedModel.Make;
-                    _asset.ModelNumber = editedModel.ModelNumber;
-                    _asset.StatusId = editedModel.StatusId;
+                    if(_asset.ComputerName.Equals(editedModel.ComputerName))
+                            _asset.ComputerName = _asset.ComputerName;
+                       else
+                       {
+                        concatChangeLog(nameof(editedModel.ComputerName), editedModel.ComputerName, _asset.ComputerName, _assetAuditLog);
+                        _asset.ComputerName = editedModel.ComputerName;
+                       }
 
+                    if (_asset.DepartmentID.Equals(editedModel.DepartmentID))
+                        _asset.DepartmentID = _asset.DepartmentID;
+                    else
+                    {
+                    concatChangeLog(nameof(editedModel.DepartmentID), editedModel.DepartmentID.ToString(), _asset.DepartmentID.ToString(), _assetAuditLog);
+                    _asset.DepartmentID = editedModel.DepartmentID;
+
+                    }
+                    if (_asset.Description.Equals(editedModel.Description))
+                        _asset.Description = _asset.Description;
+                    else
+                    {
+                    concatChangeLog(nameof(editedModel.Description), editedModel.Description.ToString(), _asset.Description, _assetAuditLog);
+                    _asset.Description = editedModel.Description;
+
+                    }
+                    if (_asset.EmployeeId.Equals(editedModel.EmployeeId))
+                        _asset.EmployeeId = _asset.EmployeeId;
+                    else
+                    {
+                    concatChangeLog(nameof(editedModel.EmployeeId), editedModel.EmployeeId.ToString(), _asset.EmployeeId.ToString(), _assetAuditLog);
+                    _asset.EmployeeId = editedModel.EmployeeId;
+
+                    }
+                    if (_asset.Make.Equals(editedModel.Make))
+                        _asset.Make = _asset.Make;
+                    else
+                    {
+                    concatChangeLog(nameof(editedModel.Make), editedModel.Make.ToString(), _asset.Make, _assetAuditLog);
+                    _asset.Make = editedModel.Make;
+
+                    }
+                    if (_asset.ModelNumber.Equals(editedModel.ModelNumber))
+                        _asset.ModelNumber = _asset.ModelNumber;
+                    else
+                    {
+                    concatChangeLog(nameof(editedModel.ModelNumber), editedModel.ModelNumber.ToString(), _asset.ModelNumber, _assetAuditLog);
+                    _asset.ModelNumber = editedModel.ModelNumber;
+
+                    }
+                    if (_asset.StatusId.Equals(editedModel.StatusId))
+                        _asset.StatusId = _asset.StatusId;
+                    else
+                    {
+                    concatChangeLog(nameof(editedModel.StatusId), editedModel.StatusId.ToString(), _asset.StatusId.ToString(), _assetAuditLog);
+                    _asset.StatusId = editedModel.StatusId;
+                    }
+
+                    _asset.DateModified = DateTime.Now;
+
+                _assetAuditLog.AssetId = _asset.Id;
+                _assetAuditLog.LogMessage = "Successfully updated Asset: " + _asset.Id + " " + _assetAuditLog.LogMessage;
+                _assetAuditLog.EntryDate = DateTime.Now;
+                _assetAuditLog.ProcessName = "Modified";
+
+                _dal.AssetAuditLogs.Add(_assetAuditLog);
                 await _dal.SaveChangesAsync();
                 return CreatedAtAction(nameof(GetAssetById), new { id = _asset.Id, controller = "assets" }, editedModel);
             }
@@ -153,6 +237,11 @@ namespace AssetCoreSol.Controllers
             }
             
             
+        }
+
+        private void concatChangeLog(string changedProperty, string changedPropertyValueNew, string changedPropertyValueOld, AssetAuditLog log)
+        {
+            log.LogMessage = log.LogMessage + changedProperty + ": " + changedPropertyValueOld + " to " + changedPropertyValueNew + ", ";
         }
 
         // DELETE api/values/5
@@ -167,7 +256,14 @@ namespace AssetCoreSol.Controllers
             if(asset == null)
                 _log.LogError("model parameter passed is null.");
 
-           _dal.Remove(asset);
+            AssetAuditLog _assetAuditLog = new AssetAuditLog();
+            _assetAuditLog.AssetId = asset.Id;
+            _assetAuditLog.LogMessage = "Successfully deleted Asset: " + asset.Id + " " + _assetAuditLog.LogMessage;
+            _assetAuditLog.EntryDate = DateTime.Today;
+            _assetAuditLog.ProcessName = "Removed";
+            _dal.AssetAuditLogs.Add(_assetAuditLog);
+
+            _dal.Remove(asset);
             _dal.SaveChangesAsync();
         }
     }
