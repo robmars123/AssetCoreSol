@@ -2549,3 +2549,138 @@ ORDER BY [x].[Id] DESC" (0723d8ff)
 2021-07-19T01:01:17.4075944-05:00 0HMAADIVR3CB8:00000008 [INF] Executing ObjectResult, writing value of type '"DAL.Models.AssetModel"'. (8a1b66c8)
 2021-07-19T01:01:17.4081204-05:00 0HMAADIVR3CB8:00000008 [INF] Executed action "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)" in 8.8219ms (afa2e885)
 2021-07-19T01:01:17.4082053-05:00 0HMAADIVR3CB8:00000008 [INF] Request finished in 9.16ms 200 application/json; charset=utf-8 (791a596a)
+2021-07-19T09:56:35.8284746-05:00  [INF] User profile is available. Using '"C:\Users\Rob\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2021-07-19T09:56:36.3789904-05:00 0HMAAOLJVGTMS:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:50056/  0 (ca22a1cb)
+2021-07-19T09:56:36.3789905-05:00 0HMAAOLJVGTMT:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44349/api/assets/index   (ca22a1cb)
+2021-07-19T09:56:36.4062454-05:00 0HMAAOLJVGTMS:00000001 [INF] Request finished in 28.2642ms 200  (791a596a)
+2021-07-19T09:56:36.5536198-05:00 0HMAAOLJVGTMT:00000001 [INF] Route matched with "{action = \"Index\", controller = \"Assets\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[DAL.Models.AssetModel]] Index()" on controller "AssetCoreSol.Controllers.AssetsController" ("AssetCoreSol"). (122b2fdf)
+2021-07-19T09:56:36.7024890-05:00 0HMAAOLJVGTMT:00000001 [INF] Executing action method "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)" - Validation state: Valid (dad538d7)
+2021-07-19T09:56:39.4229222-05:00 0HMAAOLJVGTMT:00000001 [INF] Entity Framework Core "2.1.14-servicing-32113" initialized '"AssetDataAccess"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2021-07-19T09:56:39.6052786-05:00 0HMAAOLJVGTMT:00000001 [ERR] An error occurred using the connection to database '"AssetCoreManagement"' on server '"(LocalDB)\MSSQLLocalDB"'. (5fc3407c)
+System.Data.SqlClient.SqlException (0x80131904): Cannot attach file 'E:\Angular Project\Solution\VStudio Solutions\AssetCore\AssetCoreSol\AssetCoreSol\App_Data\AssetCoreManagement.mdf' as database 'AssetCoreManagement' because this file is already in use for database 'E:\ANGULAR PROJECT\SOLUTION\VSTUDIO SOLUTIONS\ASSETCORE\ASSETCORESOL\ASSETCORESOL\APP_DATA\ASSETCOREMANAGEMENT.MDF'
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.WaitForPendingOpen()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+ClientConnectionId:45d03aa4-fd02-4d9b-95a4-79636b4f5869
+Error Number:1857,State:2,Class:16
+2021-07-19T09:56:39.6168868-05:00 0HMAAOLJVGTMT:00000001 [ERR] An exception occurred in the database while iterating the results of a query for context type '"DAL.AssetDataAccess"'."
+""System.Data.SqlClient.SqlException (0x80131904): Cannot attach file 'E:\Angular Project\Solution\VStudio Solutions\AssetCore\AssetCoreSol\AssetCoreSol\App_Data\AssetCoreManagement.mdf' as database 'AssetCoreManagement' because this file is already in use for database 'E:\ANGULAR PROJECT\SOLUTION\VSTUDIO SOLUTIONS\ASSETCORE\ASSETCORESOL\ASSETCORESOL\APP_DATA\ASSETCOREMANAGEMENT.MDF'
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.WaitForPendingOpen()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+ClientConnectionId:45d03aa4-fd02-4d9b-95a4-79636b4f5869
+Error Number:1857,State:2,Class:16" (64e2593c)
+System.Data.SqlClient.SqlException (0x80131904): Cannot attach file 'E:\Angular Project\Solution\VStudio Solutions\AssetCore\AssetCoreSol\AssetCoreSol\App_Data\AssetCoreManagement.mdf' as database 'AssetCoreManagement' because this file is already in use for database 'E:\ANGULAR PROJECT\SOLUTION\VSTUDIO SOLUTIONS\ASSETCORE\ASSETCORESOL\ASSETCORESOL\APP_DATA\ASSETCOREMANAGEMENT.MDF'
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.WaitForPendingOpen()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+ClientConnectionId:45d03aa4-fd02-4d9b-95a4-79636b4f5869
+Error Number:1857,State:2,Class:16
+2021-07-19T09:56:39.6599115-05:00 0HMAAOLJVGTMT:00000001 [INF] Executed action "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)" in 3104.4665ms (afa2e885)
+2021-07-19T09:56:39.6758405-05:00 0HMAAOLJVGTMT:00000001 [ERR] An unhandled exception has occurred while executing the request. (48a46595)
+System.Data.SqlClient.SqlException (0x80131904): Cannot attach file 'E:\Angular Project\Solution\VStudio Solutions\AssetCore\AssetCoreSol\AssetCoreSol\App_Data\AssetCoreManagement.mdf' as database 'AssetCoreManagement' because this file is already in use for database 'E:\ANGULAR PROJECT\SOLUTION\VSTUDIO SOLUTIONS\ASSETCORE\ASSETCORESOL\ASSETCORESOL\APP_DATA\ASSETCOREMANAGEMENT.MDF'
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, SqlCredential credential, Object providerInfo, String newPassword, SecureString newSecurePassword, Boolean redirectedUserInstance, SqlConnectionString userConnectionOptions, SessionData reconnectSessionData, Boolean applyTransientFaultHandling)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, DbConnectionPoolKey poolKey, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnectionPool pool, DbConnection owningObject, DbConnectionOptions options, DbConnectionPoolKey poolKey, DbConnectionOptions userOptions)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject, DbConnectionOptions userOptions, DbConnectionInternal oldConnection)
+   at System.Data.ProviderBase.DbConnectionPool.TryGetConnection(DbConnection owningObject, UInt32 waitForMultipleObjectsTimeout, Boolean allowCreate, Boolean onlyOneCheckConnection, DbConnectionOptions userOptions, DbConnectionInternal& connection)
+   at System.Data.ProviderBase.DbConnectionPool.WaitForPendingOpen()
+--- End of stack trace from previous location where exception was thrown ---
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenDbConnectionAsync(Boolean errorsExpected, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.BufferlessMoveNext(DbContext _, Boolean buffer, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncQueryingEnumerable`1.AsyncEnumerator.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.SelectEnumerableAsyncIterator`2.MoveNextCore(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.AsyncIterator`1.MoveNext(CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.AsyncLinqOperatorProvider.ExceptionInterceptor`1.EnumeratorExceptionInterceptor.MoveNext(CancellationToken cancellationToken)
+   at System.Linq.AsyncEnumerable.Aggregate_[TSource,TAccumulate,TResult](IAsyncEnumerable`1 source, TAccumulate seed, Func`3 accumulator, Func`2 resultSelector, CancellationToken cancellationToken)
+   at AssetCoreSol.Controllers.AssetsController.Index() in E:\Angular Project\Solution\VStudio Solutions\AssetCore\AssetCoreSol\AssetCoreSol\Controllers\AssetsController.cs:line 39
+   at lambda_method(Closure , Object )
+   at Microsoft.Extensions.Internal.ObjectMethodExecutorAwaitable.Awaiter.GetResult()
+   at Microsoft.AspNetCore.Mvc.Internal.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at System.Threading.Tasks.ValueTask`1.get_Result()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeActionMethodAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextResourceFilter()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Rethrow(ResourceExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeFilterPipelineAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeAsync()
+   at Microsoft.AspNetCore.Builder.RouterMiddleware.Invoke(HttpContext httpContext)
+   at Microsoft.AspNetCore.Cors.Infrastructure.CorsMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.Invoke(HttpContext context)
+ClientConnectionId:45d03aa4-fd02-4d9b-95a4-79636b4f5869
+Error Number:1857,State:2,Class:16
+2021-07-19T09:56:39.7172025-05:00 0HMAAOLJVGTMT:00000001 [INF] Request finished in 3339.4355ms 500 text/html; charset=utf-8 (791a596a)
+2021-07-19T09:56:39.7888362-05:00 0HMAAOLJVGTMS:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44349/favicon.ico   (ca22a1cb)
+2021-07-19T09:56:39.7903723-05:00 0HMAAOLJVGTMS:00000002 [INF] Request finished in 1.5702ms 404  (791a596a)
+2021-07-19T10:00:58.7854487-05:00  [INF] User profile is available. Using '"C:\Users\Rob\AppData\Local\ASP.NET\DataProtection-Keys"' as key repository and Windows DPAPI to encrypt keys at rest. (7ac5e29c)
+2021-07-19T10:00:59.0851227-05:00 0HMAAOO29249M:00000001 [INF] Request starting HTTP/1.1 GET http://localhost:44349/api/assets/index   (ca22a1cb)
+2021-07-19T10:00:59.0851094-05:00 0HMAAOO29249N:00000001 [INF] Request starting HTTP/1.1 DEBUG http://localhost:50056/  0 (ca22a1cb)
+2021-07-19T10:00:59.1056118-05:00 0HMAAOO29249N:00000001 [INF] Request finished in 21.3851ms 200  (791a596a)
+2021-07-19T10:00:59.1964271-05:00 0HMAAOO29249M:00000001 [INF] Route matched with "{action = \"Index\", controller = \"Assets\"}". Executing controller action with signature "System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.ActionResult`1[DAL.Models.AssetModel]] Index()" on controller "AssetCoreSol.Controllers.AssetsController" ("AssetCoreSol"). (122b2fdf)
+2021-07-19T10:00:59.2657989-05:00 0HMAAOO29249M:00000001 [INF] Executing action method "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)" - Validation state: Valid (dad538d7)
+2021-07-19T10:01:50.9714756-05:00 0HMAAOO29249M:00000001 [INF] Entity Framework Core "2.1.14-servicing-32113" initialized '"AssetDataAccess"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None" (9958f5bb)
+2021-07-19T10:01:51.1016406-05:00 0HMAAOO29249M:00000001 [INF] Executed DbCommand ("17"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[Id], [a].[AssetCategoryId], [a].[ComputerName], [a].[DateAcquired], [a].[DateModified], [a].[DepartmentID], [a].[Description], [a].[EmployeeId], [a].[Make], [a].[ModelNumber], [a].[StatusId]
+FROM [Assets] AS [a]" (0723d8ff)
+2021-07-19T10:01:51.1470827-05:00 0HMAAOO29249M:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [a].[AssetCategoryId], [a].[AssetCategoryName]
+FROM [AssetCategories] AS [a]" (0723d8ff)
+2021-07-19T10:01:51.1530967-05:00 0HMAAOO29249M:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [s].[StatusId], [s].[Description]
+FROM [Status] AS [s]" (0723d8ff)
+2021-07-19T10:01:51.1587510-05:00 0HMAAOO29249M:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [d].[Id], [d].[Name]
+FROM [Departments] AS [d]" (0723d8ff)
+2021-07-19T10:01:51.1646734-05:00 0HMAAOO29249M:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [e].[Id], [e].[FirstName], [e].[LastName], [e].[OfficeLocation], [e].[Title]
+FROM [Employees] AS [e]" (0723d8ff)
+2021-07-19T10:01:51.1771176-05:00 0HMAAOO29249M:00000001 [INF] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT [x].[Id], [x].[AssetId], [x].[EntryDate], [x].[LogMessage], [x].[ProcessName]
+FROM [AssetAuditLogs] AS [x]
+ORDER BY [x].[Id] DESC" (0723d8ff)
+2021-07-19T10:01:51.7832244-05:00 0HMAAOO29249M:00000001 [INF] Executed action method "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)", returned result "Microsoft.AspNetCore.Mvc.ObjectResult" in 52515.5288ms. (50a9e262)
+2021-07-19T10:01:51.7889897-05:00 0HMAAOO29249M:00000001 [INF] Executing ObjectResult, writing value of type '"DAL.Models.AssetModel"'. (8a1b66c8)
+2021-07-19T10:01:51.8357713-05:00 0HMAAOO29249M:00000001 [INF] Executed action "AssetCoreSol.Controllers.AssetsController.Index (AssetCoreSol)" in 52637.4315ms (afa2e885)
+2021-07-19T10:01:51.8419396-05:00 0HMAAOO29249M:00000001 [INF] Request finished in 52758.0543ms 200 application/json; charset=utf-8 (791a596a)
+2021-07-19T10:01:51.8812885-05:00 0HMAAOO29249N:00000002 [INF] Request starting HTTP/1.1 GET http://localhost:44349/favicon.ico   (ca22a1cb)
+2021-07-19T10:01:51.8827254-05:00 0HMAAOO29249N:00000002 [INF] Request finished in 1.4587ms 404  (791a596a)
