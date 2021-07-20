@@ -8,3 +8,44 @@
   </li>
 
 </ul>
+
+<div class="container">
+  <div class="row">
+    <div class="col ">
+      <div class="card-header bg-secondary text-light shadow-sm">
+        <i class="fas fa-history me-2"></i>
+        <span>System Activity</span>
+      </div>
+      <div class="border pb-3 activityList">
+         <mat-selection-list mat-header-cell #shoes [multiple]="false" >
+          <mat-list-option  *ngFor="let activity of getAssetsResponse.assetAuditLogList | slice:0:30; let i=index">
+            <div style="float:left;">
+              <button mat-flat-button disabled style="display:inline;" class="processName" 
+              [ngClass]="{'processNameRemoved':activity.processName == 'Removed',
+                          'processNameAdded':activity.processName == 'Added',
+                          'processNameUpdated':activity.processName == 'Modified'}">
+                {{ activity.processName }}
+              </button>
+              <span style="display:inline;">Asset Id: "{{ activity.assetId}}"    </span>
+              <span class="timeElapsed">{{ timeSince(activity.entryDate) }}</span>
+            </div>
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+    </div>
+    <!-- collumn 2 -->
+    <div class="col ">
+      <div class="card-header bg-secondary text-light shadow-sm">
+        <span>Add New Asset</span>
+      </div>
+      <div class="border  pb-3">
+        <mat-selection-list #shoes [multiple]="false">
+          <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe">
+            {{shoe}}
+          </mat-list-option>
+        </mat-selection-list>
+      </div>
+    </div>
+
+  </div>
+</div>

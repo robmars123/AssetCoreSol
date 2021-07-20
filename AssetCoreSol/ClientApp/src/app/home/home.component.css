@@ -1,2 +1,57 @@
-﻿body {
-}
+﻿
+  .processNameRemoved{
+    font-family: 'Brandon Text', Helvetica, Arial;
+    font-size: 11px;
+    width: 5px;
+    height: 25px;
+    font-weight: bold;
+    vertical-align: middle !important;
+    text-align: center;
+    background-color: #949494 !important;
+    line-height: 0px !important;
+    padding: 0px !important;
+    margin-right: 5px;
+    color: white !important;
+  }
+
+  .processNameAdded{
+    font-family: 'Brandon Text', Helvetica, Arial;
+    font-size: 11px;
+    width: 5px;
+    height: 25px;
+    font-weight: bold;
+    vertical-align: middle !important;
+    text-align: center;
+    background-color: #026436 !important;
+    line-height: 0px !important;
+    padding: 0px !important;
+    margin-right: 5px;
+    color: white !important;
+  }
+
+  .processNameUpdated{
+    font-family: 'Brandon Text', Helvetica, Arial;
+    font-size: 11px;
+    width: 5px;
+    height: 25px;
+    font-weight: bold;
+    vertical-align: middle !important;
+    text-align: center;
+    background-color: #3b559b !important;
+    line-height: 0px !important;
+    padding: 0px !important;
+    margin-right: 5px;
+    color: white !important;
+  }
+
+  .timeElapsed{
+      float:right;
+     font-size: 11px;
+  }
+
+
+  /* scrollable div */
+  .activityList {
+    height:350px;
+    overflow-y: scroll;
+  }

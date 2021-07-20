@@ -15,9 +15,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { SearchFilterPipe } from './services/search-filter.pipe';
+import {MatListModule} from '@angular/material/list';
 
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { MatTableModule } from '@angular/material/table'
+import { MatTableModule } from '@angular/material/table';
+import {MatButtonModule} from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { MatTableModule } from '@angular/material/table'
     MatSliderModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatButtonModule,
+    MatListModule,
     MatTableModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
