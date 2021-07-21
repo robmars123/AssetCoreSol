@@ -36,14 +36,11 @@
     <!-- collumn 2 -->
     <div class="col ">
       <div class="card-header bg-secondary text-light shadow-sm">
-        <span>Add New Asset</span>
+        <i class="fas fa-database me-2" ></i>
+        <span>Asset Quantity</span>
       </div>
       <div class="border  pb-3">
-        <mat-selection-list #shoes [multiple]="false">
-          <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe">
-            {{shoe}}
-          </mat-list-option>
-        </mat-selection-list>
+          <app-pie-chart></app-pie-chart>
       </div>
     </div>
 

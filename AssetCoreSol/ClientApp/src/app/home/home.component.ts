@@ -3,6 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { AssetService } from '../services/asset.service';
 import { AssetModel } from '../services/assetModel';
+import * as pluginDataLabels from 'chart.js';
 
 @Component({
   selector: 'app-home',

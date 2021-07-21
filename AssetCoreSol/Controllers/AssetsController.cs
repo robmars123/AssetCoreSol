@@ -124,9 +124,6 @@ namespace AssetCoreSol.Controllers
                 //save the last asset record added in the system to AssetAuditLog
                 saveLatestRecordToAuditLog(_asset);
 
-
-
-
                 return  CreatedAtAction(nameof(GetAssetById), new { id = _asset.Id, controller = "assets" }, newAssetModel);
             }
             catch (Exception e)
@@ -154,7 +151,6 @@ namespace AssetCoreSol.Controllers
         {
             try
             {
-                string changeLog = "";
                 if (editedModel == null)
                 {
                     _log.LogError("model parameter passed is null.");
