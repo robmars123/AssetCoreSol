@@ -13,6 +13,6 @@ namespace DAL.Entities
         public string LogMessage {get;set;}
         public DateTime? EntryDate {get;set;}
         public string ProcessName { get; set; }
-        public int ActivityDoneBy_EmployeeId { get; set; }
+        public int? ActivityDoneBy_EmployeeId { get; set; }
     }
 }

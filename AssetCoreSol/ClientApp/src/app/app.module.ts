@@ -22,6 +22,8 @@ import { MatTableModule } from '@angular/material/table';
 import {MatButtonModule} from '@angular/material/button';
 import { ChartsModule } from 'ng2-charts';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
+import { LoginpageComponent } from './loginpage/loginpage.component';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
     AssetsComponent,
     AssetDetailsComponent,
     SearchFilterPipe,
-    PieChartComponent
+    PieChartComponent,
+    LoginpageComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -40,6 +43,7 @@ import { PieChartComponent } from './pie-chart/pie-chart.component';
     FormsModule,
     MatSliderModule,
     MatPaginatorModule,
+    MatCardModule,
     ChartsModule,
     MatSelectModule,
     MatButtonModule,

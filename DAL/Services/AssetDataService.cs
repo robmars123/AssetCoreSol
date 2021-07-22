@@ -13,7 +13,7 @@ namespace Business.Services
 {
     public class AssetDataService : BaseContext, IAssetService
     {
-        public AssetDataService(AssetDataAccess _db) : base(_db)
+        public AssetDataService(DataContext _db) : base(_db)
         {
             
         }  

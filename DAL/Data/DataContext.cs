@@ -6,13 +6,13 @@ namespace DAL
     using DAL.Entities;
     using Microsoft.EntityFrameworkCore;
 
-    public partial class AssetDataAccess : DbContext
+    public partial class DataContext : DbContext
     {
-        public AssetDataAccess()
+        public DataContext()
         {
         }
 
-        public AssetDataAccess(DbContextOptions<AssetDataAccess> options)
+        public DataContext(DbContextOptions<DataContext> options)
             : base(options)
         {
         }
@@ -24,6 +24,7 @@ namespace DAL
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<AssetAuditLog> AssetAuditLogs { get; set; }
+        public virtual DbSet<AppUser> AppUsers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

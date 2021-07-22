@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Business;
 using DAL;
+using DAL.Interfaces;
+using DAL.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AssetCoreSol
 {
@@ -29,6 +34,7 @@ namespace AssetCoreSol
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ITokenService, TokenService>();
             services.AddCors(options =>
             {
                 options.AddPolicy("CORS", corsPolicyBuilder => corsPolicyBuilder.AllowAnyOrigin()
@@ -40,11 +46,22 @@ namespace AssetCoreSol
                     .AllowCredentials());
                 // Apply CORS policy for all users  
             });
-           // services.AddCors();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"])),
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+
+                    };
+                });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             //DB Connection
-            services.AddDbContext<AssetDataAccess>(options =>
+            services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer(Configuration["AppSettings:DBConnection"]);
             });
@@ -70,6 +87,7 @@ namespace AssetCoreSol
                 app.UseHsts();
             }
             app.UseAuthentication();
+
             app.UseCors("CORS"); //place before MVC
 
             app.UseMvc(routes =>

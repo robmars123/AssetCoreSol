@@ -24,10 +24,10 @@ namespace AssetCoreSol.Controllers
     [ApiController]
     public class AssetsController : ControllerBase
     {
-        private readonly AssetDataAccess _dal;
+        private readonly DataContext _dal;
         readonly ILogger<AssetsController> _log;
 
-        public AssetsController(AssetDataAccess dal)
+        public AssetsController(DataContext dal)
         {
               _dal = dal;
         }

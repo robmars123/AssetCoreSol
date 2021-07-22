@@ -6,14 +6,14 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'ClientApp';
-
+export class AppComponent implements OnInit{
+  public title = 'Asset Management Portal';
+  isLoggedIn = true;
   //assets: any;
 
-  //ngOnInit() {
-  //  this.getAssets();
-  //}
+  ngOnInit() {
+   
+  }
 
   //constructor(private http: HttpClient) { }
 

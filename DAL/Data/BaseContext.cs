@@ -10,11 +10,11 @@ namespace DAL.Data
 {
     public abstract class BaseContext: DbContext
     {
-        public static AssetDataAccess db;
+        public static DataContext db;
 
-        public BaseContext(AssetDataAccess _db)
+        public BaseContext(DataContext _db)
         {
-            db = new AssetDataAccess();
+            db = new DataContext();
         }
     }
 }
