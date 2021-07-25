@@ -27,6 +27,12 @@ namespace AssetCoreSol.Controllers
             _tokenService = tokenService;
         }
 
+        [HttpGet("[action]")]
+        public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
+        {
+            return await _dal.AppUsers.ToListAsync();
+
+        }
         [HttpPost("register")]
         public async Task<ActionResult<UserModel>> Register(RegisterModel _user)
         {
@@ -52,27 +58,34 @@ namespace AssetCoreSol.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserModel>> Login(LoginModel loginUser)
+        public async Task<ActionResult<UserModel>> Login([FromBody] LoginModel loginUser)
         {
+            UserModel userModel = new UserModel();
             var user = await _dal.AppUsers.SingleOrDefaultAsync(x => x.UserName == loginUser.Username);
 
-            if (user == null) return Unauthorized();
-
+            if (user == null) {
+                userModel.ValidationMessage = "Invalid username or password.";
+                userModel.IsLoginSuccessful = false;
+                return userModel;
+            }
             var hmac = new HMACSHA512(user.PasswordSalt);
 
             var computerHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginUser.Password));
 
             for (int i = 0; i < computerHash.Length; i++)
             {
-                if (computerHash[i] != user.PasswordHash[i])
-                    return StatusCode(401, "Invalid password.");
+                if (computerHash[i] != user.PasswordHash[i]){
+                    var validation = "Invalid password.";
+                    userModel.ValidationMessage = validation;
+                    userModel.IsLoginSuccessful = false;
+                    return userModel;
+                }
             }
 
-               return new UserModel
-            {
-                Username = user.UserName,
-                Token = _tokenService.CreateToken(user)
-            };
+                userModel.Username = user.UserName;
+                userModel.Token = _tokenService.CreateToken(user);
+                userModel.IsLoginSuccessful = true;
+               return userModel;
         }
 
         private async Task<bool> UserExists(string username)

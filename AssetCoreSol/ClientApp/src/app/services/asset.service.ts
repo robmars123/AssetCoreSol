@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Asset } from './asset';
-import { AssetModel } from './assetModel';
+import { AssetModel } from '../models/assetModel';
 
 
 @Injectable({

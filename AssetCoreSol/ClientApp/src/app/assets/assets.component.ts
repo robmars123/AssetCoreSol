@@ -1,4 +1,4 @@
-import { ViewEncapsulation, ViewChild } from '@angular/core';
+import { ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
 import { Component, Inject, Injectable, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AssetService } from '../services/asset.service'
@@ -7,11 +7,13 @@ import { DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms'
 
 import { BehaviorSubject } from 'rxjs';
-import { AssetModel } from '../services/assetModel'; // Acts like a view model
+import { AssetModel } from '../models/assetModel'; // Acts like a view model
 import { Asset } from '../services/asset';
 import { PageEvent } from '@angular/material/paginator';
 import { MatPaginator } from '@angular/material/paginator';
 import { ThrowStmt } from '@angular/compiler';
+import { LoginService } from '../services/login.service';
+import { UserModel } from '../models/userModel';
 
 @Component({
   selector: 'app-assets',
@@ -21,6 +23,7 @@ import { ThrowStmt } from '@angular/compiler';
 })
 @Injectable()
 export class AssetsComponent implements OnInit {
+  @Output() updateDataEvent = new EventEmitter<string | null>();
   title: string = "Assets Page";
   isLoading = new BehaviorSubject(false);
   isAddedSuccessfulMessage = false;
@@ -50,12 +53,11 @@ export class AssetsComponent implements OnInit {
   currentEndIndex = 0;
   //Search value
   searchValue: string = "";
-  constructor(private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder) {
+  constructor(private loginService: LoginService,private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder) {
     this.listData = [];
 
     this.assetForm = this.fb.group({
       computerName: ['', Validators.required],
-      description: ['', Validators.required],
       make: ['', Validators.required],
       modelNumber: ['', Validators.required],
       statusId: ['', Validators.required],
@@ -65,6 +67,10 @@ export class AssetsComponent implements OnInit {
     })
   }
   ngOnInit() {
+    var userLoginToken = this.loginService.getCurrentUserLoggedIn();
+    if(userLoginToken != null || undefined)
+      this.updateDataEvent.emit(userLoginToken); //send back to App-Component as Parent component
+
     this.GetAssets();
     this.isLoading.next(true);
 

@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { AssetService } from '../services/asset.service';
-import { AssetModel } from '../services/assetModel';
+import { AssetModel } from '../models/assetModel';
 import * as pluginDataLabels from 'chart.js';
+import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-home',
@@ -11,19 +12,26 @@ import * as pluginDataLabels from 'chart.js';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit{
+  title: string = "Home";
   public getAssetsResponse: AssetModel = new AssetModel;
   totalAssets: any;
+  data = this.loginService.getData();
   assetAuditList: any;
   typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
 
-  constructor(private assetService: AssetService, private pageTitle: Title) {
-
+  constructor(private assetService: AssetService, private loginService: LoginService, private pageTitle: Title) {
+    if(this.data){
+      //this.isLoggedIn = this.data;
+     }
+     else{
+     //  this.router.navigateByUrl('/login');
+     }
 
   }
 
   ngOnInit() {
     this.GetAssets();
-  //  this.getCurrentDate();
+    this.setTitle(this.title);
   }
 
   GetAssets() {
@@ -76,5 +84,9 @@ export class HomeComponent implements OnInit{
         setInterval(() => {
         this.time = dateParam; //set time variable with current date 
       }, 1000); // set it every one second
+    }
+
+    public setTitle(newTitle: string) {
+      this.pageTitle.setTitle(newTitle);
     }
 }

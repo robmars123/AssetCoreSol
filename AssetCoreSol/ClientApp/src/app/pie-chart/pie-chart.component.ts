@@ -3,7 +3,7 @@ import { Label } from 'ng2-charts';
 import { ChartOptions, ChartType } from 'chart.js';
 import * as pluginDataLabels from 'chart.js';
 import { AssetService } from '../services/asset.service';
-import { AssetModel } from '../services/assetModel';
+import { AssetModel } from '../models/assetModel';
 
 @Component({
   selector: 'app-pie-chart',

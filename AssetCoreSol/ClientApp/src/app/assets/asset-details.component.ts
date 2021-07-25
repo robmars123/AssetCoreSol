@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, Validators, NgForm, NgControl } from '@angular/
 import { BehaviorSubject } from 'rxjs';
 import { Asset } from '../services/asset'; //import Asset class
 import { Category } from '../models/category'; // import Category class
-import { AssetModel } from '../services/assetModel';
+import { AssetModel } from '../models/assetModel';
 
 @Component({
     selector: 'app-assets',

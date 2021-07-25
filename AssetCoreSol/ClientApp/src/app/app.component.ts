@@ -1,30 +1,41 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserModel } from './models/userModel';
+import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  template: `
+
+  `,
 })
 export class AppComponent implements OnInit{
-  public title = 'Asset Management Portal';
-  isLoggedIn = true;
-  //assets: any;
+  model: any;
+  isLoggedIn = false;
 
+constructor(private loginService: LoginService,private router:Router){
+}
   ngOnInit() {
-   
+    var userLoginToken = this.loginService.getCurrentUserLoggedIn();
+    if(userLoginToken != null || undefined){
+      this.isLoggedIn = true;
+     // this.router.navigate(['/home']);
+    }
   }
 
-  //constructor(private http: HttpClient) { }
+  updateData(authenticatedUserToken: string | null){
+    var token = authenticatedUserToken as string;
+    if(authenticatedUserToken != null || undefined){
+      localStorage.setItem("CurrentLoggedUser", token);
+      this.isLoggedIn = true;
+    }
+  }
 
-
-
-  //getAssets() {
-  //  this.http.get('https://localhost:5001/api/values').subscribe(response => {
-  //    this.assets = response;
-  //  },
-  //    error => {
-  //      console.log(error);
-  //    });
-  //}
+  logout(){
+    let logoutSuccessful = this.loginService.logoutUser();
+    if(logoutSuccessful)
+      this.isLoggedIn = false;
+  }
 }
