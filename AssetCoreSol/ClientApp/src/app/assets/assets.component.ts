@@ -1,19 +1,21 @@
-import { ViewEncapsulation, ViewChild, Output, EventEmitter } from '@angular/core';
-import { Component, Inject, Injectable, OnInit } from '@angular/core';
+import { ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { AssetService } from '../services/asset.service'
-import { DatePipe } from '@angular/common';
 
-import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 
 import { BehaviorSubject } from 'rxjs';
 import { AssetModel } from '../models/assetModel'; // Acts like a view model
-import { Asset } from '../services/asset';
-import { PageEvent } from '@angular/material/paginator';
-import { MatPaginator } from '@angular/material/paginator';
-import { ThrowStmt } from '@angular/compiler';
 import { LoginService } from '../services/login.service';
-import { UserModel } from '../models/userModel';
+
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+import { CheckInOutQueue } from '../models/checkInOutQueue';
+import { Asset } from '../models/asset';
 
 @Component({
   selector: 'app-assets',
@@ -43,7 +45,9 @@ export class AssetsComponent implements OnInit {
   public employeeList: any;
   public assetAuditList: any;
   selectedCategoryItem: string = "";
-
+  notificationMessage = "";
+  checkedInAssetsList: any;
+  checkedInAssetsTotals: any;
 
   startIndex=  0;
   endIndex = 10;
@@ -53,7 +57,18 @@ export class AssetsComponent implements OnInit {
   currentEndIndex = 0;
   //Search value
   searchValue: string = "";
-  constructor(private loginService: LoginService,private assetService: AssetService, private pageTitle: Title, private fb: FormBuilder) {
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
+  assetToCheckIn : CheckInOutQueue = new CheckInOutQueue();
+  checkedInBy: string = "";
+  checkInComments: string = "";
+  constructor(private loginService: LoginService,
+    private assetService: AssetService, 
+    private pageTitle: Title, 
+    private fb: FormBuilder,
+    private _snackBar: MatSnackBar) {
+    
+
     this.listData = [];
 
     this.assetForm = this.fb.group({
@@ -78,11 +93,16 @@ export class AssetsComponent implements OnInit {
     var successfullyDeleted =localStorage.getItem(this.successfullyDeletedMessageKey);
 
     if(successfullyAdded !== null){
+      this.notificationMessage = successfullyAdded;
+    this.openNotification(this.notificationMessage);
+    
       this.isAddedSuccessfulMessage = true;
       this.successfulMessage = successfullyAdded;
       localStorage.removeItem(this.successfullyAddedMessageKey);
     }
     else if(successfullyDeleted !== null){
+      this.notificationMessage = successfullyDeleted;
+      this.openNotification(this.notificationMessage);
       this.isDeletedSuccessfulMessage = true;
       this.successfulMessage = successfullyDeleted;
       localStorage.removeItem(this.successfullyDeletedMessageKey);
@@ -92,7 +112,38 @@ export class AssetsComponent implements OnInit {
 
   }
 
+  addToQueue(){
+      if(this.assetToCheckIn != null || undefined){
+        
+        var checkedInBy = (<HTMLInputElement>document.getElementById("checkedInBy")).value.toString();
+        var checkInComments = (<HTMLInputElement>document.getElementById("checkInComments")).value.toString();
+        if(checkedInBy != null && checkInComments != null){
+          this.assetToCheckIn.checkedInBy = checkedInBy;
+          this.assetToCheckIn.comments = checkInComments;
+        }
+         this.assetService.addToQueue(this.assetToCheckIn);
+      }
+  }
+  selectedAssetDataList(){
+    var item = (<HTMLInputElement>document.getElementById("selectedId")).value.toString();
+    let id = item.split('-')[0].toString();
+    
+    if(this.getAssetsResponse.assetList != null || undefined){
+      var matchedAsset = this.getAssetsResponse.assetList.find(asset=>asset.id = id);
+      //to check in
+      if(matchedAsset != null || undefined){
+        this.assetToCheckIn.assetId = matchedAsset?.id as string;
+        this.assetToCheckIn.entryDate = this.getCurrentDate();
+        this.assetToCheckIn.currentlyAssignedTo =  matchedAsset?.employeeName as string;
+      }
+    }
 
+
+  }
+
+  getCurrentDate(){
+    return new Date().toISOString().slice(0, 10)
+  }
   //add record
   addItem() {
 
@@ -149,6 +200,7 @@ export class AssetsComponent implements OnInit {
       this.assetService.getAssets().subscribe((data) => {
       this.getAssetsResponse = data;
       this.totalAssets = this.getAssetsResponse.assetList.length;
+      this.checkedInAssetsTotals = this.getAssetsResponse.checkInOutQueueList.length;
 
      // this.pageSizeOptions = this.totalAssets; //page size based on total assets
       let categories = this.getAssetsResponse.categoryList;
@@ -156,6 +208,7 @@ export class AssetsComponent implements OnInit {
       let departmentList = this.getAssetsResponse.departmentList;
       let employeeList = this.getAssetsResponse.employeeList;
       let assetAuditList = this.getAssetsResponse.assetAuditLogList;
+      let checkedInAssetsList = this.getAssetsResponse.checkInOutQueueList;
 
       var self = this;
       this.getAssetsResponse.assetList.forEach(function (asset) {
@@ -170,6 +223,7 @@ export class AssetsComponent implements OnInit {
       this.statusList = statusList;
       this.employeeList = employeeList;
       this.assetAuditList = assetAuditList;
+      this.checkedInAssetsList = checkedInAssetsList;
     });
   }
  //get categories - this will be called once only after webapi returns the data. Looping through asset list happens only in the Angular client.
@@ -218,6 +272,13 @@ export class AssetsComponent implements OnInit {
      localStorage.removeItem(this.successfullyAddedMessageKey);
      localStorage.setItem(this.successfullyAddedMessageKey, returnedMessage);
     window.location.reload();
+  }
+  //Notification bar
+  openNotification(msg: string) {
+    this._snackBar.open(msg, 'Notification', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //page title

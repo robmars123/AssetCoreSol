@@ -1,4 +1,4 @@
-import { Category } from "../models/category";
+import { Category } from "./category";
 
  export class Asset {
 

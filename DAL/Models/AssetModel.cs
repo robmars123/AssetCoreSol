@@ -14,5 +14,6 @@ namespace DAL.Models
         public IEnumerable<Department> DepartmentList { get; set; }
         public IEnumerable<Employee> EmployeeList { get; set; }
         public IEnumerable<AssetAuditLog> AssetAuditLogList { get; set; }
+        public IEnumerable<CheckInOutQueue> CheckInOutQueueList { get; set; }
     }
 }

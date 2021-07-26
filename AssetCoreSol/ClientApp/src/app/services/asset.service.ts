@@ -1,8 +1,9 @@
 import {Inject, Injectable} from '@angular/core';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Asset } from './asset';
+import { Asset } from '../models/asset';
 import { AssetModel } from '../models/assetModel';
+import { CheckInOutQueue } from '../models/checkInOutQueue';
 
 
 @Injectable({
@@ -15,6 +16,16 @@ export class AssetService {
 
   constructor(private http: HttpClient) { }
 
+  addToQueue(postData: CheckInOutQueue){
+    let endPoints = "AddToQueue"
+    this.toJsonString = JSON.stringify(postData);
+    let newStr = this.toJsonString.substring(1, this.toJsonString.length - 1);
+    this.http.post(this.baseUrl + endPoints, newStr, this.options)
+    .subscribe(data => {
+  console.log(data);
+    });
+    return "Record added to check-in queue.";
+  }
   getAssets(): Observable<AssetModel> {
     return this.http.get<AssetModel>(this.baseUrl + "index");
   }

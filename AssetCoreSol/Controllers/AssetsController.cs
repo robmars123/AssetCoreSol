@@ -43,7 +43,8 @@ namespace AssetCoreSol.Controllers
                 StatusList = GetStatusList(),
                 DepartmentList = GetDepartmentList(),
                 EmployeeList = GetEmployeeList(),
-                AssetAuditLogList = GetLogActivityList()
+                AssetAuditLogList = GetLogActivityList(),
+                CheckInOutQueueList = GetCheckedInQueueList()
             };
             return assetPage;
         }
@@ -76,6 +77,10 @@ namespace AssetCoreSol.Controllers
             return _dal.AssetAuditLogs.OrderByDescending(x=>x).ToList();
         }
 
+        private IEnumerable<CheckInOutQueue> GetCheckedInQueueList()
+        {
+            return _dal.CheckInOutQueues.ToList();
+        }
         //Get single record
         [HttpGet("{id}")]
         [Consumes("application/json")]
@@ -89,12 +94,34 @@ namespace AssetCoreSol.Controllers
                 StatusList = GetStatusList(),
                 DepartmentList = GetDepartmentList(),
                 EmployeeList = GetEmployeeList(),
-                AssetAuditLogList = GetLogActivityList()
+                AssetAuditLogList = GetLogActivityList(),
+                CheckInOutQueueList = GetCheckedInQueueList()
             };
             return assetPage;
         }
 
-        
+        [HttpPost("addtoqueue")]
+        [Consumes("application/json")]
+        public async Task<ActionResult> AddToQueue([FromBody] CheckInOutQueue checkedInAsset)
+        {
+            if (checkedInAsset == null)
+            {
+                _log.LogError("model parameter passed is null.");
+            }
+            CheckInOutQueue checkedInAssetToSave = new CheckInOutQueue()
+            {
+                AssetId = checkedInAsset.AssetId,
+                CheckedInBy = checkedInAsset.CheckedInBy,
+                Comments = checkedInAsset.Comments,
+                EntryDate = checkedInAsset.EntryDate,
+                OperationPerformedBy = checkedInAsset.OperationPerformedBy,
+                StatusId = checkedInAsset.StatusId
+            };
+
+             _dal.CheckInOutQueues.Add(checkedInAssetToSave);
+            await _dal.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetAssetById), new { id = checkedInAsset.AssetId, controller = "assets" }, checkedInAsset);
+        }
         [HttpPost]
         [Consumes("application/json")]
         public async Task<IActionResult> AddAsset([FromBody] Asset newAssetModel)

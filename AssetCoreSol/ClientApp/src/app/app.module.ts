@@ -24,6 +24,8 @@ import { ChartsModule } from 'ng2-charts';
 import { PieChartComponent } from './pie-chart/pie-chart.component';
 import { LoginpageComponent } from './loginpage/loginpage.component';
 import {MatCardModule} from '@angular/material/card';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -43,8 +45,10 @@ import {MatCardModule} from '@angular/material/card';
     FormsModule,
     MatSliderModule,
     MatPaginatorModule,
+    MatTabsModule,
     MatCardModule,
     ChartsModule,
+    MatSnackBarModule,
     MatSelectModule,
     MatButtonModule,
     MatListModule,

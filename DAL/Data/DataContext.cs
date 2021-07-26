@@ -25,6 +25,7 @@ namespace DAL
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<AssetAuditLog> AssetAuditLogs { get; set; }
         public virtual DbSet<AppUser> AppUsers { get; set; }
+        public virtual DbSet<CheckInOutQueue> CheckInOutQueues { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

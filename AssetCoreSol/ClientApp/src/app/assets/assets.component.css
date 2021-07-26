@@ -96,3 +96,20 @@ thead,th     { background:#fff; color: rgb(107, 107, 107)}
   left: 100%;
   margin-left: 5px;
 }
+
+/* Check In & Check Out Page */
+.fieldsetCustom {
+  font-family: sans-serif;
+  border: solid 1px;
+  border-color: gainsboro;
+  color: gray;
+  padding: 15px;
+}
+
+.fieldsetCustom .legendCustom {
+  padding: 5px 5px ;
+  font-size: 11px;
+}
+.legendCustom{
+  background: #fff;
+}

@@ -1,9 +1,10 @@
 import { Category } from "./category";
 import { Department } from "./department";
 import { Status } from "./status";
-import { Asset } from "../services/asset";
+import { Asset } from "./asset";
 import { Employee } from "./employee";
 import { AssetAuditLog } from "./assetAuditLog";
+import { CheckInOutQueue } from "./checkInOutQueue";
 
  export class AssetModel {
 
@@ -14,4 +15,5 @@ import { AssetAuditLog } from "./assetAuditLog";
   departmentList: Department[];
   employeeList: Employee[];
   assetAuditLogList: AssetAuditLog[];
+  checkInOutQueueList: CheckInOutQueue[];
 }

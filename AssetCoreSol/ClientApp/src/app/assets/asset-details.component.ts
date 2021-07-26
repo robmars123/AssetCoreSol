@@ -7,7 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, NgForm, NgControl } from '@angular/forms'
 
 import { BehaviorSubject } from 'rxjs';
-import { Asset } from '../services/asset'; //import Asset class
+import { Asset } from '../models/asset'; //import Asset class
 import { Category } from '../models/category'; // import Category class
 import { AssetModel } from '../models/assetModel';
 
