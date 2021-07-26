@@ -130,7 +130,8 @@ export class AssetsComponent implements OnInit {
     let id = item.split('-')[0].toString();
     
     if(this.getAssetsResponse.assetList != null || undefined){
-      var matchedAsset = this.getAssetsResponse.assetList.find(asset=>asset.id = id);
+      let checkAssetList = this.getAssetsResponse.assetList;
+      var matchedAsset = checkAssetList.find(asset=>asset.id == id);
       //to check in
       if(matchedAsset != null || undefined){
         this.assetToCheckIn.assetId = matchedAsset?.id as string;
