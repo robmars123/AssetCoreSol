@@ -17,10 +17,10 @@ export class AssetService {
   constructor(private http: HttpClient) { }
 
   addToQueue(postData: CheckInOutQueue){
-    let endPoints = "AddToQueue"
+    let endPoints = "addtoqueue"
     this.toJsonString = JSON.stringify(postData);
-    let newStr = this.toJsonString.substring(1, this.toJsonString.length - 1);
-    this.http.post(this.baseUrl + endPoints, newStr, this.options)
+    //let newStr = this.toJsonString.substring(1, this.toJsonString.length - 1);
+    this.http.post(this.baseUrl + endPoints, this.toJsonString, this.options)
     .subscribe(data => {
   console.log(data);
     });

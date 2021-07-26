@@ -118,10 +118,11 @@ export class AssetsComponent implements OnInit {
         var checkedInBy = (<HTMLInputElement>document.getElementById("checkedInBy")).value.toString();
         var checkInComments = (<HTMLInputElement>document.getElementById("checkInComments")).value.toString();
         if(checkedInBy != null && checkInComments != null){
-          this.assetToCheckIn.checkedInBy = checkedInBy;
+          this.assetToCheckIn.checkedInBy = checkedInBy as string;
           this.assetToCheckIn.comments = checkInComments;
         }
          this.assetService.addToQueue(this.assetToCheckIn);
+         window.location.reload();
       }
   }
   selectedAssetDataList(){
