@@ -32,9 +32,11 @@ export class AssetsComponent implements OnInit {
   isDeletedSuccessfulMessage = false;
   public getAssetsResponse: AssetModel = new AssetModel;
   public successfulMessage: any;
+  successfulQueueMessage: any;
   assetForm: FormGroup;
   listData: any;
   totalAssets: number = 0;
+  successfullyAddedQueueKey: string = "successfulQueueMessage";
   successfullyAddedMessageKey: string = "successfullyAddedMessage";
   successfullyDeletedMessageKey: string = "successfullyDeletedMessage";
   public statusEnum: any; //dropdownlist for Status
@@ -91,6 +93,7 @@ export class AssetsComponent implements OnInit {
 
     var successfullyAdded =localStorage.getItem(this.successfullyAddedMessageKey);
     var successfullyDeleted =localStorage.getItem(this.successfullyDeletedMessageKey);
+    var successfullyAddedtoQueue = localStorage.getItem(this.successfullyAddedQueueKey);
 
     if(successfullyAdded !== null){
       this.notificationMessage = successfullyAdded;
@@ -107,6 +110,11 @@ export class AssetsComponent implements OnInit {
       this.successfulMessage = successfullyDeleted;
       localStorage.removeItem(this.successfullyDeletedMessageKey);
     }
+    else if (successfullyAddedtoQueue != null){
+      this.notificationMessage = successfullyAddedtoQueue;
+      this.openNotification(this.notificationMessage);
+      localStorage.removeItem(this.successfullyAddedMessageKey);
+    }
    
     this.setTitle(this.title);
 
@@ -121,7 +129,8 @@ export class AssetsComponent implements OnInit {
           this.assetToCheckIn.checkedInBy = checkedInBy as string;
           this.assetToCheckIn.comments = checkInComments;
         }
-         this.assetService.addToQueue(this.assetToCheckIn);
+         this.successfulQueueMessage = this.assetService.addToQueue(this.assetToCheckIn);
+         localStorage.setItem(this.successfullyAddedQueueKey, this.successfulQueueMessage);
          window.location.reload();
       }
   }
